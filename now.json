@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "name": "nodefaas",
+    "alias": [
+        "rynodefaas"
+    ],
+    "env": {
+        "db": "@mongo_faas",
+        "pg_user_faas": "@pg_user_faas",
+        "pg_host_faas": "@pg_host_faas",
+        "pg_dbname_faas": "@pg_dbname_faas",
+        "pg_password_faas": "@pg_password_faas"
+    },
+    "builds": [{
+        "src": "backend/*.js",
+        "use": "@now/node"
+    }, {
+        "src": "package.json",
+        "use": "@now/static-build"
+    }],
+    "routes": [{
+        "src": "/api/(.*)",
+        "dest": "/backend/$1.js"
+    }, {
+        "src": "/",
+        "dest": "/index.html"
+    }],
+    "public": true
+}
