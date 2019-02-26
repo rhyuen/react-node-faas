@@ -1,3 +1,3 @@
 # ABOUT
 
-React and Node in FAAS.
+React and Node Boilerplate in FAAS for use on Zeit Now.

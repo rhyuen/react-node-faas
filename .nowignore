@@ -7,3 +7,5 @@ nginx.conf
 .prettierrc
 webpack.config.dev.js
 keys.json
+now-secrets.json
+.env

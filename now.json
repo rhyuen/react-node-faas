@@ -19,11 +19,22 @@
         "use": "@now/static-build"
     }],
     "routes": [{
-        "src": "/api/(.*)",
-        "dest": "/backend/$1.js"
-    }, {
-        "src": "/",
-        "dest": "/index.html"
-    }],
+            "src": "/api/signup",
+            "dest": "/backend/signup.js",
+            "methods": ["POST"]
+        },
+        {
+            "src": "/api/login",
+            "dest": "/backend/login.js",
+            "methods": ["POST"]
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "/backend/$1.js"
+        }, {
+            "src": "/",
+            "dest": "/index.html"
+        }
+    ],
     "public": true
 }
