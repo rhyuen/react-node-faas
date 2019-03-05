@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
     } catch (e) {
         const payload = {
             error: true,
-            details: e,
+            details: e.message,
             stack: e.stack
         };
         res.end(JSON.stringify(payload));

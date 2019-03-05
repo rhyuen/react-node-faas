@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-    <title>My Boilerplate</title>
+    <title>Login/Signup</title>
     <link rel="icon" type="image/png/ico" href="./favicon.ico" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,7 +22,11 @@
         .root {
             width: 100%;
             display: flex;
+            height: 100%;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
         }
 
 
@@ -48,9 +52,17 @@
         }
 
         @media screen and (min-width: 1024px) {
+
+            .root {
+                position: relative;
+                bottom: 50px;
+            }
+
             #app {
                 width: 1024px;
             }
+
+
         }
     </style>
 </head>

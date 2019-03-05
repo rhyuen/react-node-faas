@@ -32,6 +32,9 @@
             "src": "/api/(.*)",
             "dest": "/backend/$1.js"
         }, {
+            "src": "/me",
+            "dest": "/index.html"
+        }, {
             "src": "/",
             "dest": "/index.html"
         }

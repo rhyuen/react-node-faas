@@ -1,7 +1,7 @@
 const db = require("./db/index.js");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const cookies = require("cookies");
+const Cookies = require("cookies");
 const {
     json
 } = require("micro");
@@ -39,6 +39,19 @@ module.exports = async (req, res) => {
             throw new Error("Username and/or password don't match.");
         }
 
+        const key = ["A Signing key"];
+        const cookies = new Cookies(req, res, {
+            keys: key
+        });
+        const options = {
+            signed: true,
+            secure: false,
+            httpOnly: true,
+            path: "/",
+            maxAge: 3600000
+        };
+        const rng = Math.floor(Math.random() * 100);
+        cookies.set(`FAASnumber${rng}`, `Mongoose${rng}`, options);
 
         res.setStatus = 200;
         const payload = {
