@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
             maxAge: 3600000
         };
         const rng = Math.floor(Math.random() * 100);
-        cookies.set(`FAASnumber${rng}`, `Mongoose${rng}`, options);
+        cookies.set(`FAASnumber${rng}`, `ELEPHANTSremember${rng}`, options);
 
         res.setStatus = 200;
         const payload = {

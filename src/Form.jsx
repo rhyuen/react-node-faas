@@ -4,21 +4,16 @@ import InfoText from "./InfoText.jsx";
 import FormButton from "./FormButton.jsx";
 import TextInput from "./FormTextInput.jsx";
 
-export default ({
-  onFormSubmit,
-  onInputChange,
-  usernameValue,
-  passwordValue
-}) => {
+export default ({ onFormSubmit, onInputChange, emailValue, passwordValue }) => {
   return (
     <form onSubmit={onFormSubmit}>
       <div>
         <TextInput
           type="text"
-          placeholder="Username"
-          name="username"
+          placeholder="Email"
+          name="email"
           onChange={onInputChange}
-          value={usernameValue}
+          value={emailValue}
         />
       </div>
       <div>

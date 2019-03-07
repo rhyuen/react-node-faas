@@ -32,8 +32,10 @@ module.exports = async (req, res) => {
         // await db.query(makeUsersTable, []);
         const statement = await db.query(insert, [uuid.v4(), email, hash]);
         const payload = {
-            rows: statement.rows
+            rows: statement.rows,
+            message: "Sign-up success."
         };
+        res.statusCode = 200;
         res.end(JSON.stringify(payload));
     } catch (e) {
         const payload = {

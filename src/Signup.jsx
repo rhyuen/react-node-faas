@@ -48,6 +48,7 @@ class Signup extends Component {
     axios
       .post(url, signupDetails)
       .then(res => {
+        console.log(res.data);
         this.setState(prevState => {
           return {
             ...prevState,

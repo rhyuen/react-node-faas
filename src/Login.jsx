@@ -8,21 +8,22 @@ import Form from "./Form.jsx";
 
 class Login extends Component {
   state = {
-    username: "",
+    email: "",
     password: ""
   };
 
   handleInputChange = e => {
-    let currInputValue = e.currentTarget.value;
-    let currInputName = e.currentTarget.name;
+    // let currInputValue = e.currentTarget.value;
+    // let currInputName = e.currentTarget.name;
+    const { value, name } = e.currentTarget;
     this.setState(prevState => {
       let change = {};
-      switch (currInputName) {
-        case "username":
-          change = { username: currInputValue };
+      switch (name) {
+        case "email":
+          change = { email: value };
           break;
         case "password":
-          change = { password: currInputValue };
+          change = { password: value };
           break;
       }
       return Object.assign(prevState, change);
@@ -33,24 +34,24 @@ class Login extends Component {
     e.preventDefault();
     console.log("Logging in.");
     const url = "/api/login";
-    const username = this.state.username;
-    const password = this.state.password;
+    const { email, password } = this.state;
 
-    if (username === "" || password === "") {
+    if (email === "" || password === "") {
       return;
     }
 
     axios
       .post(url, {
-        username: username,
-        password: password
+        email,
+        password
       })
       .then(res => {
         console.log(res);
+        console.log(res.data.message);
         this.setState(prevState => {
           return {
             ...prevState,
-            username: "",
+            email: "",
             password: ""
           };
         });
@@ -71,7 +72,7 @@ class Login extends Component {
           this.setState(prevState => {
             return {
               ...prevState,
-              username: "",
+              email: "",
               password: ""
             };
           });
@@ -85,7 +86,7 @@ class Login extends Component {
         <h1>Login</h1>
         <Form
           onInputChange={this.handleInputChange}
-          usernameValue={this.state.username}
+          emailValue={this.state.email}
           passwordValue={this.state.password}
           onFormSubmit={this.handleFormSubmit}
         />
