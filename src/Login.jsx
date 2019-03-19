@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import InfoText from "./InfoText.jsx";
 import Card from "./Card.jsx";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import Me from "./Me.jsx";
 import StyledLink from "./StyledLink.jsx";
 import Form from "./Form.jsx";
+import validator from "validator";
 
 class Login extends Component {
   state = {
@@ -30,15 +32,30 @@ class Login extends Component {
     });
   };
 
+  isValidForm = () => {
+    const { email, password } = this.state;
+
+    //No email, no password
+    if (email === "" || password === "") {
+      return false;
+    }
+
+    //Invalid email
+    if (!validator.isEmail(email)) {
+      return false;
+    }
+
+    return true;
+  };
+
   handleFormSubmit = e => {
     e.preventDefault();
-    console.log("Logging in.");
+    console.log("Data submitted for login");
     const url = "/api/login";
     const { email, password } = this.state;
 
-    if (email === "" || password === "") {
-      return;
-    }
+    //Add validation here again.
+    //The one bound to the UI button is for UI purposes.
 
     axios
       .post(url, {
@@ -55,7 +72,10 @@ class Login extends Component {
             password: ""
           };
         });
-        window.location.assign("/me");
+        this.props.onLogin();
+
+        //do stuff here.
+        //this.props.history.push("/me");
       })
       .catch(err => {
         if (err.response.status === 401) {
@@ -77,6 +97,8 @@ class Login extends Component {
             };
           });
         }
+
+        console.log(err);
       });
   };
 
@@ -89,6 +111,7 @@ class Login extends Component {
           emailValue={this.state.email}
           passwordValue={this.state.password}
           onFormSubmit={this.handleFormSubmit}
+          onValidForm={this.isValidForm}
         />
         <InfoText>
           Forgot your password? Click <StyledLink to="/forgot">Here</StyledLink>

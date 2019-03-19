@@ -31,7 +31,6 @@ module.exports = async (req, res) => {
             throw new Error("Username not found.");
         }
 
-        console.log(result);
         console.log(result.rows);
 
         const isValidPassword = await bcrypt.compare(password, result.rows[0].password);
@@ -48,18 +47,20 @@ module.exports = async (req, res) => {
             secure: false,
             httpOnly: true,
             path: "/",
-            maxAge: 3600000
+            maxAge: 3000000
         };
-        const rng = Math.floor(Math.random() * 100);
-        cookies.set(`FAASnumber${rng}`, `ELEPHANTSremember${rng}`, options);
+
+        cookies.set("email", email, options);
 
         res.setStatus = 200;
+
         const payload = {
             message: "You've successfully logged in."
         };
         res.end(JSON.stringify(payload));
 
     } catch (e) {
+        console.log(e);
         const errorPayload = {
             error: true,
             trace: e.stack,

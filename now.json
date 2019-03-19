@@ -34,7 +34,8 @@
         }, {
             "src": "/me",
             "dest": "/index.html"
-        }, {
+        },
+        {
             "src": "/",
             "dest": "/index.html"
         }

@@ -4,7 +4,13 @@ import InfoText from "./InfoText.jsx";
 import FormButton from "./FormButton.jsx";
 import TextInput from "./FormTextInput.jsx";
 
-export default ({ onFormSubmit, onInputChange, emailValue, passwordValue }) => {
+export default ({
+  onFormSubmit,
+  onInputChange,
+  emailValue,
+  passwordValue,
+  onValidForm
+}) => {
   return (
     <form onSubmit={onFormSubmit}>
       <div>
@@ -29,7 +35,7 @@ export default ({ onFormSubmit, onInputChange, emailValue, passwordValue }) => {
         Not a user yet? Sign up <StyledLink to="/signup">Here</StyledLink>.
       </InfoText>
       <div>
-        <FormButton type="submit" value="Login" />
+        <FormButton type="submit" value="Login" disabled={!onValidForm()} />
       </div>
     </form>
   );
