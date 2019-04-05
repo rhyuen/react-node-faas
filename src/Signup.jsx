@@ -7,6 +7,7 @@ import Modal from "./Modal.jsx";
 import { Link } from "react-router-dom";
 import StyledLink from "./StyledLink.jsx";
 import axios from "axios";
+import validator from "validator";
 
 class Signup extends Component {
   state = {
@@ -43,6 +44,12 @@ class Signup extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
+
+    if (!validator.isEmail(email)) {
+      //MR25, Add Warning for Invalid Email
+      return this.setState({ email: "" });
+    }
+
     const url = "/api/signup";
     const signupDetails = { email, password };
     axios

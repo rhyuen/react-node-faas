@@ -1,7 +1,8 @@
-exports.respondWithJSON = async (req, res, status = 200, message) => {
+exports.respondWithJSON = async (req, res, status = 200, data, message) => {
 
     res.setStatus = status;
     const payload = {
+        data,
         message
     };
     res.end(JSON.stringify(payload));

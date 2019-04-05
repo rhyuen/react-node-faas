@@ -3,13 +3,15 @@ import StyledLink from "./StyledLink.jsx";
 import InfoText from "./InfoText.jsx";
 import FormButton from "./FormButton.jsx";
 import TextInput from "./FormTextInput.jsx";
+import WarningBox from "./WarningBox.jsx";
 
 export default ({
   onFormSubmit,
   onInputChange,
   emailValue,
   passwordValue,
-  onValidForm
+  onValidForm,
+  failedSubmissionWarning
 }) => {
   return (
     <form onSubmit={onFormSubmit}>
@@ -36,6 +38,9 @@ export default ({
       </InfoText>
       <div>
         <FormButton type="submit" value="Login" disabled={!onValidForm()} />
+        {failedSubmissionWarning ? (
+          <WarningBox>Invalid credentials.</WarningBox>
+        ) : null}
       </div>
     </form>
   );

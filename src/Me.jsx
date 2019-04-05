@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import TwoColumn from "./TwoColumn.jsx";
 
 class Me extends Component {
   state = {
@@ -25,16 +26,19 @@ class Me extends Component {
     const { onLogout } = this.props;
     const { email, password, user_id } = this.state.data;
     return (
-      <div>
-        <h1>"hi, it's me."</h1>
-        <h1>murp</h1>
-        <p>email:{email}</p>
-        <p>password:{password}</p>
-        <p>user_id:{user_id}</p>
-        <p>
-          <button onClick={onLogout}>Log out</button>
-        </p>
-      </div>
+      <TwoColumn>
+        <div>
+          <img src="./images/four.jpg" />
+          <h1>"hi, it's me."</h1>
+          <h1>murp</h1>
+          <p>email:{email}</p>
+          <p>password:{password}</p>
+          <p>user_id:{user_id}</p>
+          <p>
+            <button onClick={onLogout}>Log out</button>
+          </p>
+        </div>
+      </TwoColumn>
     );
   }
 }

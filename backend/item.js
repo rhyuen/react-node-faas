@@ -8,8 +8,6 @@ const {
 
 module.exports = async (req, res) => {
     try {
-
-
         res.setStatus = 200;
         const payload = {
             message: "Logging out."

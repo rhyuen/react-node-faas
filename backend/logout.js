@@ -1,6 +1,4 @@
 const db = require("./db/index.js");
-const validator = require("validator");
-const bcrypt = require("bcrypt");
 const Cookies = require("cookies");
 const {
     json
@@ -13,7 +11,9 @@ module.exports = async (req, res) => {
             keys: key
         });
 
-        cookies.set("email");
+        cookies.set("email", {
+            expires: new Date('August 19, 2000 22:00:31')
+        });
 
         res.setStatus = 200;
         res.setHeader("Content-Type", "application/json");

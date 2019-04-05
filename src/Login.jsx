@@ -1,9 +1,8 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import InfoText from "./InfoText.jsx";
 import Card from "./Card.jsx";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
-import Me from "./Me.jsx";
 import StyledLink from "./StyledLink.jsx";
 import Form from "./Form.jsx";
 import validator from "validator";
@@ -11,12 +10,11 @@ import validator from "validator";
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    failedSubmissionWarning: false
   };
 
   handleInputChange = e => {
-    // let currInputValue = e.currentTarget.value;
-    // let currInputName = e.currentTarget.name;
     const { value, name } = e.currentTarget;
     this.setState(prevState => {
       let change = {};
@@ -27,6 +25,10 @@ class Login extends Component {
         case "password":
           change = { password: value };
           break;
+      }
+      if (prevState.failedSubmissionWarning === true) {
+        const warningOff = { failedSubmissionWarning: false };
+        Object.assign(change, warningOff);
       }
       return Object.assign(prevState, change);
     });
@@ -63,8 +65,7 @@ class Login extends Component {
         password
       })
       .then(res => {
-        console.log(res);
-        console.log(res.data.message);
+        console.log(res.data);
         this.setState(prevState => {
           return {
             ...prevState,
@@ -77,28 +78,32 @@ class Login extends Component {
         //do stuff here.
         //this.props.history.push("/me");
       })
-      .catch(err => {
-        if (err.response.status === 401) {
+      .catch(error => {
+        if (error.response.status === 401) {
           console.log("Incorrect password.");
           this.setState(prevState => {
             return {
               ...prevState,
-              password: ""
+              password: "",
+              failedSubmissionWarning: true
             };
           });
         }
-        if (err.response.status === 404) {
+        if (error.response.status === 404) {
           console.log("User does not exist.");
           this.setState(prevState => {
             return {
               ...prevState,
               email: "",
-              password: ""
+              password: "",
+              failedSubmissionWarning: true
             };
           });
         }
-
-        console.log(err);
+        if (error.response.status === 400) {
+          console.log(error.message);
+        }
+        console.log(error.response.data.details);
       });
   };
 
@@ -112,6 +117,7 @@ class Login extends Component {
           passwordValue={this.state.password}
           onFormSubmit={this.handleFormSubmit}
           onValidForm={this.isValidForm}
+          failedSubmissionWarning={this.state.failedSubmissionWarning}
         />
         <InfoText>
           Forgot your password? Click <StyledLink to="/forgot">Here</StyledLink>
