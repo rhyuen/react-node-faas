@@ -9,3 +9,4 @@ webpack.config.dev.js
 keys.json
 now-secrets.json
 .env
+setupdb/*.js
