@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import TwoColumn from "./TwoColumn.jsx";
+import Accounts from "./Accounts.jsx";
+import Transactions from "./Transactions.jsx";
 
 class Me extends Component {
   state = {
@@ -10,7 +12,6 @@ class Me extends Component {
     axios
       .get("/api/user", { useCredentials: true })
       .then(res => {
-        console.log("ME");
         console.log(res.data.data);
         const payload = res.data.data;
 
@@ -28,16 +29,13 @@ class Me extends Component {
     return (
       <TwoColumn>
         <div>
-          <img src="./images/four.jpg" />
-          <h1>"hi, it's me."</h1>
-          <h1>murp</h1>
+          <h1>"You're now logged in."</h1>
           <p>email:{email}</p>
           <p>password:{password}</p>
           <p>user_id:{user_id}</p>
-          <p>
-            <button onClick={onLogout}>Log out</button>
-          </p>
         </div>
+        <Accounts />
+        <Transactions />
       </TwoColumn>
     );
   }

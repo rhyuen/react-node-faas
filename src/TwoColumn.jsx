@@ -12,7 +12,6 @@ const LeftColumn = styled.section`
   grid-column: 1 / span 8;
 `;
 const RightColumn = styled.section`
-  background: papayawhip;
   grid-column: 9 / span 4;
 `;
 class TwoColumn extends Component {

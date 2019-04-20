@@ -44,11 +44,7 @@ class App extends Component {
     loggedIn: false
   };
 
-  componentDidMount() {
-    console.log("Cookies may or may not be visible");
-    console.log(document.cookie);
-    console.log("They are not visible.");
-  }
+  componentDidMount() {}
 
   handleLogin = () => {
     this.setState(ps => {

@@ -16,9 +16,13 @@ const StyledNav = styled.nav`
 `;
 const StyledNavContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 1024px;
   height: 100%;
+`;
+const NavSection = styled.div`
+  display: flex;
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -40,9 +44,13 @@ const Nav = ({ onLogout }) => {
   return (
     <StyledNav>
       <StyledNavContainer>
-        <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="/me">Me</StyledLink>
-        <Logout onClick={onLogout} type="button" value="Log Out" />
+        <NavSection>
+          <StyledLink to="/">Home</StyledLink>
+          <StyledLink to="/me">Me</StyledLink>
+        </NavSection>
+        <NavSection>
+          <Logout onClick={onLogout} type="button" value="Log Out" />
+        </NavSection>
       </StyledNavContainer>
     </StyledNav>
   );

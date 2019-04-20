@@ -1,6 +1,6 @@
-exports.respondWithJSON = async (req, res, status = 200, data, message) => {
-
+exports.sendJSON = (req, res, status = 200, data, message) => {
     res.setStatus = status;
+    res.setHeader("Content-Type", "application/json");
     const payload = {
         data,
         message
@@ -8,7 +8,7 @@ exports.respondWithJSON = async (req, res, status = 200, data, message) => {
     res.end(JSON.stringify(payload));
 };
 
-exports.respondWithError = async (req, res, status, errorObject) => {
+exports.sendError = (req, res, status, errorObject) => {
     const {
         NODE_ENV
     } = process.env;

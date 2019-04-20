@@ -1,7 +1,7 @@
 const db = require("./db/index.js");
+const cookie = require("./helper/cookie.js");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const Cookies = require("cookies");
 const {
     json
 } = require("micro");
@@ -25,32 +25,22 @@ module.exports = async (req, res) => {
             throw new Error("Invalid email address");
         }
 
-        const statement = `select password from users where email = $1`;
-        const result = await db.query(statement, [email]);
-        if (result.rows.length === 0) {
+        const statement = `select user_id, password from users where email = $1`;
+        const {
+            rows
+        } = await db.query(statement, [email]);
+        if (rows.length === 0) {
             throw new Error("Username not found.");
         }
 
-        console.log(result.rows);
+        console.log(rows);
 
-        const isValidPassword = await bcrypt.compare(password, result.rows[0].password);
+        const isValidPassword = await bcrypt.compare(password, rows[0].password);
         if (!isValidPassword) {
             throw new Error("Username and/or password don't match.");
         }
 
-        const key = ["A Signing key"];
-        const cookies = new Cookies(req, res, {
-            keys: key
-        });
-        const options = {
-            signed: true,
-            secure: false,
-            httpOnly: true,
-            path: "/",
-            maxAge: 3000000
-        };
-
-        cookies.set("email", email, options);
+        cookie.setCookie(req, res, "user_id", rows[0].user_id);
 
         res.setStatus = 200;
 

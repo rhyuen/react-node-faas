@@ -31,5 +31,8 @@ module.exports = {
     },
     getClient: () => {
         return pool;
+    },
+    release: () => {
+        console.log('you need to implement this.');
     }
 };

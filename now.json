@@ -9,7 +9,8 @@
         "pg_user_faas": "@pg_user_faas",
         "pg_host_faas": "@pg_host_faas",
         "pg_dbname_faas": "@pg_dbname_faas",
-        "pg_password_faas": "@pg_password_faas"
+        "pg_password_faas": "@pg_password_faas",
+        "cookie_secret": "@faas_cookie_sign"
     },
     "builds": [{
         "src": "backend/*.js",

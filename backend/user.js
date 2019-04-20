@@ -1,20 +1,15 @@
 const db = require("./db/index.js");
-const Cookies = require("cookies");
+const cookie = require("./helper/cookie.js");
 
 module.exports = async (req, res) => {
     try {
-        const key = ["A Signing key"];
-        const cookies = new Cookies(req, res, {
-            keys: key
-        });
-        const userEmail = cookies.get("email");
+        const user_id = cookie.getCookies(req, res, "user_id");
 
-        const selfQuery = `select * from users where email = $1`;
+        const selfQuery = `select * from users where user_id = $1`;
         const {
             rows
-        } = await db.query(selfQuery, [userEmail]);
+        } = await db.query(selfQuery, [user_id]);
         res.setStatus = 200;
-        // res.setHeader("Content-Type", "application/json");
         const payload = {
             data: rows
         };
