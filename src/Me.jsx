@@ -5,38 +5,57 @@ import TwoColumn from "./TwoColumn.jsx";
 import Accounts from "./Accounts.jsx";
 import Transactions from "./Transactions.jsx";
 
+const FeedCard = styled.div`
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
 class Me extends Component {
   state = {
-    data: ""
+    email: "",
+    user_id: "",
+    accounts: []
   };
   componentDidMount() {
     axios
-      .get("/api/user", { useCredentials: true })
+      .get("/api/me", { useCredentials: true })
       .then(res => {
         console.log(res.data.data);
-        const payload = res.data.data;
+        const payload = res.data.data.data;
+        const accountsids = payload.map(item => item.account_id);
 
-        this.setState({
-          data: payload[0]
+        const userDetails = {
+          email: payload[0].email,
+          user_id: payload[0].user_id,
+          accounts: accountsids
+        };
+        this.props.saveUserToContext(userDetails);
+        const accountsDetails = payload.map(acc => {
+          return {
+            account_id: acc.account_id,
+            balance: acc.balance,
+            type: acc.type
+          };
         });
+        const updated = Object.assign(userDetails, {
+          accounts: accountsDetails
+        });
+        this.setState(updated);
       })
       .catch(e => {
         console.log(e);
       });
   }
   render() {
-    const { onLogout } = this.props;
-    const { email, password, user_id } = this.state.data;
+    const { accounts } = this.state;
+
     return (
       <TwoColumn>
         <FeedCard>
-          <h1>"You're now logged in."</h1>
-          <p>email:{email}</p>
-          <p>password:{password}</p>
-          <p>user_id:{user_id}</p>
-        </FeedCard>
-        <FeedCard>
-          <Accounts />
+          <Accounts accounts={accounts} />
         </FeedCard>
         <FeedCard>
           <Transactions />
@@ -47,11 +66,3 @@ class Me extends Component {
 }
 
 export default Me;
-
-const FeedCard = styled.div`
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 10px 20px;
-  width: 100%;
-  margin-bottom: 20px;
-`;

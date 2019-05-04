@@ -3,27 +3,17 @@ import axios from "axios";
 
 class Accounts extends Component {
   state = {
+    loading: true,
     data: ""
   };
-  componentDidMount() {
-    axios
-      .get("/api/accounts", { useCredentials: true })
-      .then(res => {
-        console.log(res.data);
-        //console.log(res.data.data.data);
-        this.setState({ data: res.data.data.data });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
   render() {
+    const { accounts } = this.props;
     return (
       <div>
         <h1>My Accounts</h1>
-        {this.state.data === ""
-          ? null
-          : this.state.data.map(item => {
+        {accounts === null
+          ? "Nothing to load"
+          : accounts.map(item => {
               return (
                 <div>
                   <strong>{item.account_id}</strong>

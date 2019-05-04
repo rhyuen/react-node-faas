@@ -1,42 +1,79 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import axios from "axios";
+
+const StyledHeader = styled.section`
+  display: flex;
+  justify-content: space-between;
+`;
 
 class Transactions extends Component {
   state = {
+    loading: true,
+    error: false,
     data: ""
   };
+
   componentDidMount() {
     axios
       .get("/api/transactions", { useCredentials: true })
       .then(res => {
-        console.log(res.data);
-        this.setState({
-          data: res.data.data.data
+        console.log(res.data.data);
+        this.setState(ps => {
+          return {
+            ...ps,
+            loading: false,
+            data: res.data.data
+          };
         });
       })
       .catch(e => {
+        console.log("Error with fetching transactions data.");
         console.log(e);
+        this.setState(ps => {
+          return {
+            ...ps,
+            loading: false,
+            error: true
+          };
+        });
       });
   }
-  render() {
-    return (
-      <div>
-        <h1>Recent Transactions!</h1>
 
-        <p>
-          The goal of the Web of Things is to extend the web of pages into a web
-          of things by giving connected devices URLs on the World Wide Web. This
-          will allow the web to be used as a unifying application layer for a
-          decentralized Internet of Things. Whilst web technologies are already
-          in widespread use on the Internet of Things, this is currently done
-          with mostly proprietary data formats and APIs which require per-vendor
-          integrations to make devices interoperable. In order to promote ad-hoc
-          interoperability on the Internet of Things a shared vocabulary and
-          common API is needed. In this document we propose a common data model
-          and API for the Web of Things.
-        </p>
-      </div>
-    );
+  render() {
+    let { loading, data } = this.state;
+    if (loading) {
+      return (
+        <div>
+          <h1>Loading Transactions</h1>
+          <p>Filler text goes here.</p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1>Your Recent Transactions</h1>
+          <StyledHeader>
+            <span>Type</span>
+            <span>Sender</span>
+            <span>Receiver</span>
+            <span>Amount</span>
+          </StyledHeader>
+          <section>
+            {data.map(item => {
+              return (
+                <p>
+                  <span>{item.type} || </span>
+                  <span>{item.sender_id} || </span>
+                  <span>{item.receiver_id} || </span>
+                  <span>{item.amount} || </span>
+                </p>
+              );
+            })}
+          </section>
+        </div>
+      );
+    }
   }
 }
 

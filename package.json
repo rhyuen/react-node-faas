@@ -42,6 +42,7 @@
     "cross-env": "5.2.0",
     "dotenv": "6.2.0",
     "enzyme-to-json": "3.3.5",
+    "jsonwebtoken": "8.5.1",
     "micro": "9.3.3",
     "mongoose": "5.4.13",
     "now-env": "3.1.0",
@@ -67,6 +68,7 @@
     "format": "prettier --write \"src/*.{js,jsx,css,json}\" ",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "test": "jest --watch",
-    "setupdb": "cross-env NODE_ENV=development node -r dotenv/config initdb.js dotenv_config_path=.env"
+    "setupdb": "cross-env NODE_ENV=development node -r dotenv/config initdb.js dotenv_config_path=.env",
+    "faasdev": "now dev"
   }
 }

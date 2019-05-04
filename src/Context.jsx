@@ -1,9 +1,10 @@
 import React from "react";
 
-const Context = React.createContext({
-  email: "email address",
-  password: "password here"
+const UserContext = React.createContext({
+  email: "Email Address",
+  user_id: "9123923",
+  accounts: []
 });
 
-export const Provider = Context.Provider;
-export const Consumer = Context.Consumer;
+export const Provider = UserContext.Provider;
+export const Consumer = UserContext.Consumer;

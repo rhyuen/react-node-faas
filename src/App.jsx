@@ -8,7 +8,7 @@ import Me from "./Me.jsx";
 import axios from "axios";
 import Signup from "./Signup.jsx";
 import Forgot from "./Forgot.jsx";
-import Generic from "./Generic.jsx";
+import { Provider } from "./Context.jsx";
 
 const currentTheme = {
   primaryColour: "#4842b7",
@@ -41,7 +41,8 @@ const RouteContainer = styled.div`
 
 class App extends Component {
   state = {
-    loggedIn: false
+    loggedIn: false,
+    userContext: {}
   };
 
   componentDidMount() {}
@@ -49,6 +50,12 @@ class App extends Component {
   handleLogin = () => {
     this.setState(ps => {
       return { ...ps, loggedIn: !ps.loggedIn };
+    });
+  };
+
+  handleSaveUserToContext = details => {
+    this.setState({
+      userContext: details
     });
   };
 
@@ -68,42 +75,47 @@ class App extends Component {
   render() {
     return (
       <Root>
-        <Router>
-          <ThemeProvider theme={currentTheme}>
-            <RootContent>
-              {this.state.loggedIn ? (
-                <Nav onLogout={this.handleLogout} />
-              ) : null}
+        <Provider value={this.state.userContext}>
+          <Router>
+            <ThemeProvider theme={currentTheme}>
+              <RootContent>
+                {this.state.loggedIn ? (
+                  <Nav onLogout={this.handleLogout} />
+                ) : null}
 
-              <RouteContainer>
-                <Route
-                  exact
-                  path="/"
-                  render={() =>
-                    this.state.loggedIn ? (
-                      <Redirect to="/me" />
-                    ) : (
-                      <Login onLogin={this.handleLogin} />
-                    )
-                  }
-                />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/forgot" component={Forgot} />
-                <Route
-                  exact
-                  path="/me"
-                  render={() =>
-                    !this.state.loggedIn ? (
-                      <Redirect to="/" />
-                    ) : (
-                      <Me onLogout={this.handleLogout} />
-                    )
-                  }
-                />
-              </RouteContainer>
-            </RootContent>
-          </ThemeProvider>
-        </Router>
+                <RouteContainer>
+                  <Route
+                    exact
+                    path="/"
+                    render={() =>
+                      this.state.loggedIn ? (
+                        <Redirect to="/me" />
+                      ) : (
+                        <Login onLogin={this.handleLogin} />
+                      )
+                    }
+                  />
+                  <Route exact path="/signup" component={Signup} />
+                  <Route exact path="/forgot" component={Forgot} />
+                  <Route
+                    exact
+                    path="/me"
+                    render={() =>
+                      !this.state.loggedIn ? (
+                        <Redirect to="/" />
+                      ) : (
+                        <Me
+                          onLogout={this.handleLogout}
+                          saveUserToContext={this.handleSaveUserToContext}
+                        />
+                      )
+                    }
+                  />
+                </RouteContainer>
+              </RootContent>
+            </ThemeProvider>
+          </Router>
+        </Provider>
       </Root>
     );
   }

@@ -1,9 +1,9 @@
-exports.sendJSON = (req, res, status = 200, data, message) => {
+exports.sendJSON = (req, res, status = 200, data, message = "No message added.") => {
     res.setStatus = status;
     res.setHeader("Content-Type", "application/json");
     const payload = {
-        data,
-        message
+        data: data,
+        message: message
     };
     res.end(JSON.stringify(payload));
 };
@@ -29,6 +29,6 @@ exports.sendError = (req, res, status, errorObject) => {
         });
     }
     res.statusCode = status;
+    res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(errorPayload));
-
 };

@@ -1,10 +1,20 @@
 const db = require("./db/index.js");
 const cookie = require("./helper/cookie.js");
+const jwt = require("jsonwebtoken");
+const {
+    promisify
+} = require("util");
+const {
+    sendJSON,
+    sendError
+} = require("./helper/response.js");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const {
     json
 } = require("micro");
+
+const jwtSign = promisify(jwt.sign);
 
 module.exports = async (req, res) => {
     try {
@@ -25,7 +35,12 @@ module.exports = async (req, res) => {
             throw new Error("Invalid email address");
         }
 
-        const statement = `select user_id, password from users where email = $1`;
+        const statement = `
+            select user_id, password 
+            from users 
+            where email = $1
+        `;
+
         const {
             rows
         } = await db.query(statement, [email]);
@@ -40,14 +55,36 @@ module.exports = async (req, res) => {
             throw new Error("Username and/or password don't match.");
         }
 
-        cookie.setCookie(req, res, "user_id", rows[0].user_id);
+
+        //TODO: Set JWT to Cookie Here.
+        //TODO: Rename Cookie ID
+
+        const getDetailsForToken = `
+            select users.user_id, accounts.account_id 
+            from users 
+            inner join accounts 
+            on (users.user_id = accounts.user_id) 
+            where users.user_id = $1
+        `;
+        const rowsForToken = await db.query(getDetailsForToken, [rows[0].user_id]);
+        const accountsForToken = rowsForToken.rows.map(row => row.account_id);
+        const tokenPayload = {
+            user_id: rowsForToken.rows[0].user_id,
+            accounts: accountsForToken
+        };
+        const signedToken = await jwtSign(tokenPayload, "Secret", {
+            algorithm: "HS256"
+        });
+
+        console.log(signedToken);
+
+        //cookie.setCookie(req, res, "user_id", rows[0].user_id);
+        cookie.setCookie(req, res, "auth_token", signedToken);
 
         res.setStatus = 200;
 
-        const payload = {
-            message: "You've successfully logged in."
-        };
-        res.end(JSON.stringify(payload));
+        const payloadMessage = `Logged in at ${new Date().toLocaleString()}`;
+        sendJSON(req, res, 200, payloadMessage, "Sign in Success.");
 
     } catch (e) {
         console.log(e);
@@ -56,7 +93,6 @@ module.exports = async (req, res) => {
             trace: e.stack,
             details: e.message
         };
-        res.statusCode = 400;
-        res.end(JSON.stringify(errorPayload));
+        sendError(req, res, 500, errorPayload);
     }
 };

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Logout from "./FormButton.jsx";
+import { Consumer } from "./Context.jsx";
 
 const StyledNav = styled.nav`
   background: white;
@@ -49,6 +50,15 @@ const Nav = ({ onLogout }) => {
           <StyledLink to="/me">Me</StyledLink>
         </NavSection>
         <NavSection>
+          <Consumer>
+            {context => (
+              <div>
+                <span>{context.email}</span>
+                <br />
+                <span>{context.user_id}</span>
+              </div>
+            )}
+          </Consumer>
           <Logout onClick={onLogout} type="button" value="Log Out" />
         </NavSection>
       </StyledNavContainer>
