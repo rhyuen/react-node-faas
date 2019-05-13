@@ -29,10 +29,11 @@ function generateAccountData(accts) {
         let {
             uuid,
             user_id,
+            account_name,
             type,
             balance
         } = accts[i];
-        insertAccountsQuery += `('${uuid}', '${user_id}', '${type}', ${balance})`;
+        insertAccountsQuery += `('${uuid}', '${user_id}', '${account_name}', '${type}', ${balance})`;
         if (i !== accts.length - 1) {
             insertAccountsQuery += ", ";
         } else {
@@ -155,6 +156,7 @@ function generateTransfers(accts) {
             create table accounts(
             account_id uuid not null primary key,
             user_id uuid not null references users(user_id),
+            account_name text not null default 'latest-account',
             type account_type not null default 'savings',
             balance numeric(8,2) not null default 0.00,
             created_at timestamp not null default current_timestamp,
@@ -162,7 +164,7 @@ function generateTransfers(accts) {
         )`;
 
         const insertAccountQueries = generateAccountData(accountsData);
-        const populateAccountsTable = `insert into accounts(account_id, user_id, type, balance) values ${insertAccountQueries}`;
+        const populateAccountsTable = `insert into accounts(account_id, user_id, account_name, type, balance) values ${insertAccountQueries}`;
 
         const makeTransactionTypeEnum = `drop type if exists transaction_type cascade;
         create type transaction_type as enum('deposit', 'withdrawl', 'transfer')`;

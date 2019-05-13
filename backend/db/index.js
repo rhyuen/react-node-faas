@@ -25,7 +25,7 @@ module.exports = {
                 resolve(res);
             }).catch(e => {
                 reject(e);
-            });
+            })
         });
     },
     getClient: () => {

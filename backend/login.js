@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
         //cookie.setCookie(req, res, "user_id", rows[0].user_id);
         cookie.setCookie(req, res, "auth_token", signedToken);
 
-        res.setStatus = 200;
+        db.getClient().end();
 
         const payloadMessage = `Logged in at ${new Date().toLocaleString()}`;
         sendJSON(req, res, 200, payloadMessage, "Sign in Success.");

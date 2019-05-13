@@ -1,10 +1,19 @@
 import React, { Component } from "react";
+import Card from "./Card.jsx";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-class Accounts extends Component {
+class AccountsHome extends Component {
+  state = {};
+  componentDidMount() {
+    axios.get("/api/accounts", { useCredentials: true }).then(res => {
+      const accounts = res.data.data;
+    });
+  }
   render() {
-    const { accounts } = this.props;
+    const { accounts } = this.state;
     return (
-      <div>
+      <Card>
         <h1>My Accounts</h1>
         {accounts === null
           ? "Nothing to load"
@@ -25,7 +34,7 @@ class Accounts extends Component {
                 </div>
               );
             })}
-      </div>
+      </Card>
     );
   }
 }

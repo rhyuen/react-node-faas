@@ -17,9 +17,8 @@ module.exports = async (req, res) => {
         const decodedToken = await jwtVerify(authToken, "Secret");
         console.dir(decodedToken);
 
-
         const selfQuery = `
-            select users.email, users.user_id, accounts.account_id, accounts.balance, accounts.type 
+            select users.email, users.user_id, accounts.account_id, accounts.account_name, accounts.balance, accounts.type 
             from users 
             inner join accounts 
             on (users.user_id = accounts.user_id)
@@ -29,6 +28,7 @@ module.exports = async (req, res) => {
         const {
             rows
         } = await db.query(selfQuery, [decodedToken.user_id]);
+        db.getClient().end();
         const payload = {
             data: rows
         };

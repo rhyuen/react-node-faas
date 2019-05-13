@@ -41,6 +41,7 @@ class Transactions extends Component {
   }
 
   render() {
+    console.log(this.context);
     let { loading, data } = this.state;
     if (loading) {
       return (
@@ -61,6 +62,8 @@ class Transactions extends Component {
           </StyledHeader>
           <section>
             {data.map(item => {
+              let accountNameShown = "";
+
               return (
                 <p>
                   <span>{item.type} || </span>

@@ -36,6 +36,7 @@ class Me extends Component {
         const accountsDetails = payload.map(acc => {
           return {
             account_id: acc.account_id,
+            account_name: acc.account_name,
             balance: acc.balance,
             type: acc.type
           };
