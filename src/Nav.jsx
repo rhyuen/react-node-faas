@@ -48,14 +48,13 @@ const Nav = ({ onLogout }) => {
         <NavSection>
           <StyledLink to="/">Home</StyledLink>
           <StyledLink to="/me">Me</StyledLink>
+          <StyledLink to="/account">Accounts</StyledLink>
         </NavSection>
         <NavSection>
           <Consumer>
             {context => (
               <div>
                 <span>{context.email}</span>
-                <br />
-                <span>{context.user_id}</span>
               </div>
             )}
           </Consumer>

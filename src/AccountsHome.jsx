@@ -1,42 +1,40 @@
 import React, { Component } from "react";
-import Card from "./Card.jsx";
-import { Link } from "react-router-dom";
+import FeedCard from "./FeedCard.jsx";
+import AccountCreationForm from "./AccountCreationForm.jsx";
+import TwoColumn from "./TwoColumn.jsx";
+import Accounts from "./Accounts.jsx";
 import axios from "axios";
 
 class AccountsHome extends Component {
-  state = {};
+  state = {
+    accounts: []
+  };
   componentDidMount() {
-    axios.get("/api/accounts", { useCredentials: true }).then(res => {
-      const accounts = res.data.data;
-    });
+    axios
+      .get("/api/accounts", { useCredentials: true })
+      .then(res => {
+        const accounts = res.data.data.data;
+        console.log(accounts);
+        this.setState({
+          accounts: accounts
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
+
   render() {
     const { accounts } = this.state;
     return (
-      <Card>
-        <h1>My Accounts</h1>
-        {accounts === null
-          ? "Nothing to load"
-          : accounts.map(item => {
-              return (
-                <div>
-                  <div>
-                    <p>
-                      <strong>{item.account_name}</strong>
-                    </p>
-                    <p>{item.account_id}</p>
-                  </div>
-
-                  <p>
-                    <span>{item.type}:&nbsp;</span>
-                    <span>{item.balance}</span>
-                  </p>
-                </div>
-              );
-            })}
-      </Card>
+      <TwoColumn>
+        <AccountCreationForm />
+        <FeedCard>
+          <Accounts accounts={accounts} />
+        </FeedCard>
+      </TwoColumn>
     );
   }
 }
 
-export default Accounts;
+export default AccountsHome;

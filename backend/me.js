@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
         const {
             rows
         } = await db.query(selfQuery, [decodedToken.user_id]);
-        db.getClient().end();
+        //db.getClient().end();
         const payload = {
             data: rows
         };

@@ -21,9 +21,8 @@ class Me extends Component {
   };
   componentDidMount() {
     axios
-      .get("/api/me", { useCredentials: true })
+      .get("/api/me", { withCredentials: true })
       .then(res => {
-        console.log(res.data.data);
         const payload = res.data.data.data;
         const accountsids = payload.map(item => item.account_id);
 

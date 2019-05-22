@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
             rows
         } = await db.query(getTransactions, [user_id]);
         console.log(rows);
-        db.getClient().end();
+        //db.getClient().end();
         sendJSON(req, res, 200, rows, "transactions response");
     } catch (e) {
         console.log(e);

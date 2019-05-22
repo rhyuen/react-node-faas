@@ -30,10 +30,29 @@
             "methods": ["POST"]
         },
         {
+            "src": "/api/createAccount",
+            "dest": "/backend/createAccount.js",
+            "methods": ["POST"]
+        },
+        {
+            "src": "/api/echo",
+            "dest": "/backend/echo.js",
+            "methods": ["POST"]
+        },
+        {
             "src": "/api/(.*)",
-            "dest": "/backend/$1.js"
+            "dest": "/backend/$1.js",
+            "methods": ["GET"]
         }, {
             "src": "/me",
+            "dest": "/index.html"
+        },
+        {
+            "src": "/account",
+            "dest": "/index.html"
+        },
+        {
+            "src": "/*",
             "dest": "/index.html"
         },
         {

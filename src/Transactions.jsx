@@ -16,7 +16,7 @@ class Transactions extends Component {
 
   componentDidMount() {
     axios
-      .get("/api/transactions", { useCredentials: true })
+      .get("/api/transactions", { withCredentials: true })
       .then(res => {
         console.log(res.data.data);
         this.setState(ps => {

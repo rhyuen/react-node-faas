@@ -14,9 +14,7 @@ function setCookie(req, res, name, value) {
     cookies.set(name, value, options);
 };
 
-function logoutCookie(req, res, name, value) {
 
-}
 
 function getCookies(req, res, name) {
     const key = process.env.cookie_secret;
@@ -47,6 +45,5 @@ async function checkAuthorization(req, res) {
 module.exports = {
     checkAuthorization,
     setCookie,
-    getCookies,
-    logoutCookie
+    getCookies
 }
