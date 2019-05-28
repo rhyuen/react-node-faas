@@ -52,7 +52,6 @@ class Login extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault();
-    console.log("Data submitted for login");
     const url = "/api/login";
     const { email, password } = this.state;
 
@@ -65,7 +64,6 @@ class Login extends Component {
         password
       })
       .then(res => {
-        console.log(res.data);
         this.setState(prevState => {
           return {
             ...prevState,

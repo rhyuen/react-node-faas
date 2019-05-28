@@ -13,7 +13,9 @@ exports.sendError = (req, res, status, errorObject) => {
         NODE_ENV
     } = process.env;
 
+    //TODO: MAY27/19 ADD request path and/or url to error payload
     let errorPayload = {
+        time: new Date().toLocaleString(),
         error: true
     };
     if (NODE_ENV === "production") {

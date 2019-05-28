@@ -12,10 +12,9 @@ const jwtVerify = promisify(jwt.verify);
 
 module.exports = async (req, res) => {
     try {
-        //const user_id = cookie.getCookies(req, res, "user_id");
+
         const authToken = cookie.getCookies(req, res, "auth_token");
         const decodedToken = await jwtVerify(authToken, "Secret");
-        console.dir(decodedToken);
 
         const selfQuery = `
             select users.email, users.user_id, accounts.account_id, accounts.account_name, accounts.balance, accounts.type 
@@ -28,7 +27,6 @@ module.exports = async (req, res) => {
         const {
             rows
         } = await db.query(selfQuery, [decodedToken.user_id]);
-        //db.getClient().end();
         const payload = {
             data: rows
         };

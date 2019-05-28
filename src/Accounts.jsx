@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import StyledOptionLink from "./StyledOptionLink.jsx";
 
 const Subheading = styled.h2`
   font-weight: 400;
@@ -19,9 +20,9 @@ class Accounts extends Component {
               return (
                 <div>
                   <div>
-                    <Link to={`/account/${item.account_id}`}>
+                    <StyledOptionLink to={`/account/${item.account_id}`}>
                       {item.account_name}
-                    </Link>
+                    </StyledOptionLink>
                     <br />
                     <Subheading>{item.account_id}</Subheading>
                   </div>

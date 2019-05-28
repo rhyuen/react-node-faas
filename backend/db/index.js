@@ -37,6 +37,9 @@ module.exports = {
             client.query(text, params).then(res => {
                 resolve(res);
             }).catch(e => {
+                console.log("Promise Rejection at db.index occurred.");
+                console.log(e);
+                console.log("details end");
                 client.release();
                 reject(e);
             }).then(() => {

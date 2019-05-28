@@ -18,7 +18,6 @@ class Transactions extends Component {
     axios
       .get("/api/transactions", { withCredentials: true })
       .then(res => {
-        console.log(res.data.data);
         this.setState(ps => {
           return {
             ...ps,
@@ -41,7 +40,6 @@ class Transactions extends Component {
   }
 
   render() {
-    console.log(this.context);
     let { loading, data } = this.state;
     if (loading) {
       return (
