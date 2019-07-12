@@ -13,7 +13,6 @@ const jwtVerify = promisify(jwt.verify);
 
 module.exports = async (req, res) => {
     try {
-
         const authToken = cookie.getCookies(req, res, "auth_token");
         const decodedToken = await jwtVerify(authToken, "Secret");
         const {
@@ -31,15 +30,25 @@ module.exports = async (req, res) => {
         const listOfAccounts = new Set(accounts);
         if (!listOfAccounts.has(origin)) {
             console.log(`${origin} is not in the accounts in the token.`);
-            return respond.sendError(req, res, 500, e);
+            return respond.sendJSON(req, res, 400, "Source Acct is not in the Token.");
         }
 
         const typesOfTransactions = new Set("withdrawl", "deposit", "transfer");
         if (!typesOfTransactions.has(type)) {
             console.log(`${type} is valid as a transaction type.`);
-            return respond.sendError(req, res, 500, e);
+            return respond.sendJSON(req, res, 400, "Invalid Transaction Type in POST.");
         }
 
+        let depositAcct = "00000000-0000-0000-0000-000000000002";
+        let withdrawlAcct = "00000000-0000-0000-0000-000000000001";
+        let designatedFinalTarget = depositAcct;
+        if (type === "deposit") {
+            designatedFinalTarget = depositAcct;
+        } else if (type === "withdrawl") {
+            designatedFinalTarget = withdrawlAcct;
+        } else {
+            designatedFinalTarget = transferTarget
+        }
 
 
         const createTransaction = `insert into 
@@ -48,13 +57,13 @@ module.exports = async (req, res) => {
             returning *
         `;
 
-        // const {
-        //     rows
-        // } = await db.query(createTransaction, [
-        //     uuid.v4(), origin, type, amount
-        // ]);
+        const {
+            rows
+        } = await db.query(createTransaction, [
+            uuid.v4(), origin, designatedFinalTarget, type, amount
+        ]);
 
-        respond.sendJSON(req, res, 200, "dummy text", "new account result");
+        respond.sendJSON(req, res, 200, rows, "CreateTransaction Endpoint Result");
     } catch (e) {
         console.log(e);
         respond.sendError(req, res, 500, e);

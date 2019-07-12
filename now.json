@@ -5,7 +5,6 @@
         "rynodefaas"
     ],
     "env": {
-        "db": "@mongo_faas",
         "pg_user_faas": "@pg_user_faas",
         "pg_host_faas": "@pg_host_faas",
         "pg_dbname_faas": "@pg_dbname_faas",
@@ -17,11 +16,19 @@
         "use": "@now/node"
     }, {
         "src": "package.json",
-        "use": "@now/static-build"
+        "use": "@now/static-build",
+        "config": {
+            "distDir": "dist"
+        }
     }],
     "routes": [{
             "src": "/api/signup",
             "dest": "/backend/signup.js",
+            "methods": ["POST"]
+        },
+        {
+            "src": "/api/createTransaction",
+            "dest": "/backend/createTransaction.js",
             "methods": ["POST"]
         },
         {

@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
 import axios from "axios";
 import TwoColumn from "./TwoColumn.jsx";
 import FeedCard from "./FeedCard.jsx";
@@ -19,6 +17,8 @@ class AccountSingle extends Component {
         withCredentials: true
       })
       .then(res => {
+        console.log("account single");
+        console.log(res.data);
         this.setState({
           loading: false,
           data: res.data.data
@@ -26,6 +26,9 @@ class AccountSingle extends Component {
       })
       .catch(e => {
         console.log(e);
+        this.setState({
+          loading: false
+        });
       })
       .finally(() => {});
   }
@@ -33,7 +36,21 @@ class AccountSingle extends Component {
     const { data, loading } = this.state;
     return (
       <TwoColumn>
+        <FeedCard>
+          <h1>About this account: ___</h1>
+          <section>
+            <p>Current Balance: </p>
+            <p>Account Type: </p>
+            <p>Created On: </p>
+            <p>Last Modified: </p>
+            <strong>
+              JL10: Fix the query so common information is in one field and not
+              duplicated.
+            </strong>
+          </section>
+        </FeedCard>
         <AccountTransactionForm account_id={this.props.match.params} />
+
         <FeedCard>
           <h1>Recent Account Transactions</h1>
           <section>

@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import FeedCard from "./FeedCard.jsx";
 import UpdatedInputButton from "./UpdatedInputButton.jsx";
 import FormTextInput from "./FormTextInput.jsx";
 import axios from "axios";
 
+const FormControl = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 class AccountTransactionForm extends Component {
   state = {
     type: "deposit",
@@ -20,9 +25,8 @@ class AccountTransactionForm extends Component {
 
   isFormValid = () => {
     const { amount } = this.state;
-    const castedAmount = parseFloat(amount);
-    console.log("It is of type: ");
-    console.log(typeof castedAmount);
+    const castedAmount = parseInt(amount);
+    console.log("It is of type: %s", typeof castedAmount);
     if (castedAmount !== "number") {
       console.log("TODO: Disclaimer for Numbers only.");
       return false;
@@ -36,7 +40,7 @@ class AccountTransactionForm extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault();
-    const { type, amount } = this.state;
+    const { type, amount, transferTarget } = this.state;
     const url = "/api/createTransaction";
     axios
       .post(
@@ -45,12 +49,16 @@ class AccountTransactionForm extends Component {
         { withCredentials: true }
       )
       .then(res => {
-        console.log("Form Submit Success");
         console.log(res.data.data);
       })
       .catch(e => {
-        console.log("Error on Form Submit");
         console.log(e);
+      })
+      .finally(() => {
+        console.log("Account Transaction was dispatched.");
+        this.setState({
+          amount: 0
+        });
       });
   };
 
@@ -60,15 +68,10 @@ class AccountTransactionForm extends Component {
       <FeedCard>
         <h1>New Transaction</h1>
         <form onSubmit={this.handleFormSubmit}>
-          <input type="number" name="amount" placeholder="0.00" />
-          <select onChange={this.handleFormChange} name="type">
-            <option value="deposit">Deposit</option>
-            <option value="withdraw">Withdraw</option>
-            <option value="transfer">Transfer</option>
-          </select>
+          <FormTextInput type="number" name="amount" placeholder="0.00" />
           <div>
             {type === "transfer" ? (
-              <input
+              <FormTextInput
                 type="text"
                 name="transferTarget"
                 placeholder="000000-0000-0000-000000"
@@ -76,7 +79,19 @@ class AccountTransactionForm extends Component {
               />
             ) : null}
           </div>
-          <input type="submit" value="Execute" disabled={!this.isFormValid()} />
+          <FormControl>
+            <select onChange={this.handleFormChange} name="type">
+              <option value="deposit">Deposit</option>
+              <option value="withdraw">Withdraw</option>
+              <option value="transfer">Transfer</option>
+            </select>
+
+            <UpdatedInputButton
+              type="submit"
+              value="Execute"
+              disabled={!this.isFormValid}
+            />
+          </FormControl>
         </form>
       </FeedCard>
     );

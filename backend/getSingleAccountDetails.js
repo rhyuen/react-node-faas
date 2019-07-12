@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
             return respond.sendJSON(req, res, "account_id not there", "getSingleAccountDetails EP")
         }
 
+        //TODO: NEED Account Type from query.  Need to clarify values needed out of query.
         const query = `select * 
             from accounts, transactions            
             where accounts.account_id = $1 and 

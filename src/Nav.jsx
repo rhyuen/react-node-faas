@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Logout from "./FormButton.jsx";
 import { Consumer } from "./Context.jsx";
 
 const StyledNav = styled.nav`
@@ -41,6 +40,44 @@ const StyledLink = styled(Link)`
     border-bottom: 3px solid ${props => props.theme.primaryColour};  
 `;
 
+const SelfArea = styled.section`
+  display: flex;
+  flex-direction: column;
+  height: 5vh;
+  max-height: 10vh;
+
+  &:hover {
+    height: 10vh;
+  }
+`;
+
+const FormButton = styled.div`
+  height: 5vh;
+  background: white;
+  width: 100%;
+  text-align: left;
+`;
+
+const Logout = styled(FormButton)`
+  display: none;
+  color: black;
+  background: lavender;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid transparent;
+  height: 5vh;
+  flex-direction: column;
+  justify-content: center;
+
+  ${SelfArea}:hover & {
+    display: flex;
+  }
+
+  &:hover {
+    background: white;
+    border-bottom: 3px solid ${props => props.theme.primaryColour};
+  }
+`;
+
 const Nav = ({ onLogout }) => {
   return (
     <StyledNav>
@@ -50,15 +87,16 @@ const Nav = ({ onLogout }) => {
           <StyledLink to="/me">Me</StyledLink>
           <StyledLink to="/account">Accounts</StyledLink>
         </NavSection>
+
         <NavSection>
           <Consumer>
             {context => (
-              <div>
-                <span>{context.email}</span>
-              </div>
+              <SelfArea>
+                <StyledLink to="/self">{context.email}</StyledLink>
+                <Logout onClick={onLogout}>Sign Out</Logout>
+              </SelfArea>
             )}
           </Consumer>
-          <Logout onClick={onLogout} type="button" value="Log Out" />
         </NavSection>
       </StyledNavContainer>
     </StyledNav>

@@ -55,10 +55,6 @@ module.exports = async (req, res) => {
             throw new Error("Username and/or password don't match.");
         }
 
-
-        //TODO: Set JWT to Cookie Here.
-        //TODO: Rename Cookie ID
-
         const getDetailsForToken = `
             select users.user_id, accounts.account_id 
             from users 
@@ -68,6 +64,10 @@ module.exports = async (req, res) => {
         `;
         const rowsForToken = await db.query(getDetailsForToken, [rows[0].user_id]);
         const accountsForToken = rowsForToken.rows.map(row => row.account_id);
+
+        //TODO: Hyp: case where no accounts bound to new user causes failure.
+        console.log(rowsForToken);
+
         const tokenPayload = {
             user_id: rowsForToken.rows[0].user_id,
             accounts: accountsForToken

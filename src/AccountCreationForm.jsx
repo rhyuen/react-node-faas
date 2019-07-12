@@ -1,13 +1,20 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import FeedCard from "./FeedCard.jsx";
 import UpdatedInputButton from "./UpdatedInputButton.jsx";
 import FormTextInput from "./FormTextInput.jsx";
+import WarningBox from "./WarningBox.jsx";
 import axios from "axios";
 
+const FormControl = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 class AccountCreationForm extends Component {
   state = {
     accountname: "",
-    accounttype: "savings"
+    accounttype: "savings",
+    invalidAccountName: false
   };
 
   handleFormChange = e => {
@@ -20,6 +27,13 @@ class AccountCreationForm extends Component {
   handleNewAccountSubmit = e => {
     e.preventDefault();
     const { accountname, accounttype } = this.state;
+
+    if (accountname === "") {
+      //TODO: show, you must have an account name;
+      console.log(`yes, the account name is invalid: ${accountname}`);
+      return;
+    }
+
     console.log(accountname);
     console.log(accounttype);
     axios
@@ -43,7 +57,6 @@ class AccountCreationForm extends Component {
         console.log("something went wrong with account creation.");
       })
       .finally(() => {
-        console.log("finally it clears.");
         this.setState({
           accountname: "",
           accounttype: "savings"
@@ -51,7 +64,7 @@ class AccountCreationForm extends Component {
       });
   };
   render() {
-    const { accounttype, accountname } = this.state;
+    const { accounttype, accountname, invalidAccountName } = this.state;
 
     return (
       <FeedCard>
@@ -66,17 +79,24 @@ class AccountCreationForm extends Component {
               placeholder="New Account Name"
             />
           </span>
-          <span>
-            <select
-              name="accounttype"
-              value={accounttype}
-              onChange={this.handleFormChange}
-            >
-              <option value="savings">Savings</option>
-              <option value="chequing">Chequing</option>
-            </select>
-            <UpdatedInputButton type="submit" value="Create" />
-          </span>
+          <FormControl>
+            <section>
+              <select
+                name="accounttype"
+                value={accounttype}
+                onChange={this.handleFormChange}
+              >
+                <option value="savings">Savings</option>
+                <option value="chequing">Chequing</option>
+              </select>
+              {invalidAccountName ? null : (
+                <WarningBox>Account Name cannot be empty.</WarningBox>
+              )}
+            </section>
+            <section>
+              <UpdatedInputButton type="submit" value="Create" />
+            </section>
+          </FormControl>
         </form>
       </FeedCard>
     );

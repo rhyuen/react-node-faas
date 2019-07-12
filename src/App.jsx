@@ -10,6 +10,7 @@ import Signup from "./Signup.jsx";
 import Forgot from "./Forgot.jsx";
 import AccountsHome from "./AccountsHome.jsx";
 import AccountSingle from "./AccountSingle.jsx";
+import SelfRoot from "./SelfRoot.jsx";
 import { Provider } from "./Context.jsx";
 
 const currentTheme = {
@@ -105,6 +106,7 @@ class App extends Component {
                     component={AccountSingle}
                   />
                   <Route exact path="/account" component={AccountsHome} />
+                  <Route exact path="/self" component={SelfRoot} />
                   <Route
                     exact
                     path="/me"
