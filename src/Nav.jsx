@@ -45,9 +45,11 @@ const SelfArea = styled.section`
   flex-direction: column;
   height: 5vh;
   max-height: 10vh;
+  border-bottom: 3px solid transparent;
 
   &:hover {
     height: 10vh;
+    border-bottom: 3px solid ${props => props.theme.primaryColour};
   }
 `;
 
@@ -61,19 +63,18 @@ const FormButton = styled.div`
 const Logout = styled(FormButton)`
   display: none;
   color: black;
-  background: lavender;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 3px solid transparent;
   height: 5vh;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
 
   ${SelfArea}:hover & {
     display: flex;
   }
 
   &:hover {
-    background: white;
     border-bottom: 3px solid ${props => props.theme.primaryColour};
   }
 `;
