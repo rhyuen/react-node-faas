@@ -6,12 +6,13 @@ import Nav from "./Nav.jsx";
 import Login from "./Login.jsx";
 import Me from "./Me.jsx";
 import axios from "axios";
-import Signup from "./Signup.jsx";
-import Forgot from "./Forgot.jsx";
-import AccountsHome from "./AccountsHome.jsx";
-import AccountSingle from "./AccountSingle.jsx";
-import SelfRoot from "./SelfRoot.jsx";
 import { Provider } from "./Context.jsx";
+
+const Forgot = React.lazy(() => import("./Forgot.jsx"));
+const Signup = React.lazy(() => import("./Signup.jsx"));
+const AccountsHome = React.lazy(() => import("./AccountsHome.jsx"));
+const AccountSingle = React.lazy(() => import("./AccountSingle.jsx"));
+const SelfRoot = React.lazy(() => import("./SelfRoot.jsx"));
 
 const currentTheme = {
   primaryColour: "#4842b7",
@@ -98,15 +99,17 @@ class App extends Component {
                       )
                     }
                   />
-                  <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/forgot" component={Forgot} />
-                  <Route
-                    exact
-                    path="/account/:account_id"
-                    component={AccountSingle}
-                  />
-                  <Route exact path="/account" component={AccountsHome} />
-                  <Route exact path="/self" component={SelfRoot} />
+                  <React.Suspense fallback={"Loading guise!"}>
+                    <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/forgot" component={Forgot} />
+                    <Route
+                      exact
+                      path="/account/:account_id"
+                      component={AccountSingle}
+                    />
+                    <Route exact path="/account" component={AccountsHome} />
+                    <Route exact path="/self" component={SelfRoot} />
+                  </React.Suspense>
                   <Route
                     exact
                     path="/me"
