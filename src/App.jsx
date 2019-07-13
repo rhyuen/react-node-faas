@@ -4,7 +4,6 @@ import { HashRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import Nav from "./Nav.jsx";
 import Login from "./Login.jsx";
-import Me from "./Me.jsx";
 import axios from "axios";
 import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
 import { Provider } from "./Context.jsx";
@@ -101,7 +100,11 @@ class App extends Component {
                       )
                     }
                   />
-                  <React.Suspense fallback={<LoadingPlaceholder message= "Waiting to get access to your own funds. How 2008."/>}>
+                  <React.Suspense
+                    fallback={
+                      <LoadingPlaceholder message="Waiting to get access to your own funds. How 2008." />
+                    }
+                  >
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/forgot" component={Forgot} />
                     <Route
