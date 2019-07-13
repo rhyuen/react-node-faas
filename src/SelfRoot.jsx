@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import TwoColumn from "./TwoColumn.jsx";
-import FeedCard from "./FeedCard.jsx";
-import StyledTextInput from "./FormTextInput.jsx";
-import UpdatedInputButton from "./UpdatedInputButton.jsx";
+import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
 
+const UpdatePassword = React.lazy(() => import("./self/UpdatePassword.jsx"));
+const ChangeEmail = React.lazy(() => import("./self/ChangeEmail.jsx"));
 const DeleteAccount = React.lazy(() => import("./self/DeleteAccount.jsx"));
 
 class SelfRoot extends Component {
@@ -14,33 +14,19 @@ class SelfRoot extends Component {
   render() {
     return (
       <TwoColumn>
-        <FeedCard>
-          <h1>Change Password</h1>
-          <section>
-            <StyledTextInput
-              type="password"
-              placeholder="Your current password here."
-            />
-            <StyledTextInput type="password" placeholder="Your new password." />
-            <StyledTextInput
-              type="password"
-              placeholder="The new password again."
-            />
-            <UpdatedInputButton type="submit" value="Update Password" />
-          </section>
-        </FeedCard>
-        <FeedCard>
-          <h1>Change Email</h1>
-          <section>
-            <StyledTextInput
-              type="text"
-              placeholder="Email you signed in with."
-            />
-            <StyledTextInput type="text" placeholder="Your updated email." />
-            <UpdatedInputButton type="submit" value="Change Email" />
-          </section>
-        </FeedCard>
-        <React.Suspense fallback={"Loading Delete Operation..."}>
+        <React.Suspense
+          fallback={<LoadingPlaceholder message="Loading update password..." />}
+        >
+          <UpdatePassword />
+        </React.Suspense>
+        <React.Suspense
+          fallback={<LoadingPlaceholder message="Loading change email..." />}
+        >
+          <ChangeEmail />
+        </React.Suspense>
+        <React.Suspense
+          fallback={<LoadingPlaceholder message="Loading delete account..." />}
+        >
           <DeleteAccount />
         </React.Suspense>
       </TwoColumn>

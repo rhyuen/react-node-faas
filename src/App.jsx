@@ -6,8 +6,10 @@ import Nav from "./Nav.jsx";
 import Login from "./Login.jsx";
 import Me from "./Me.jsx";
 import axios from "axios";
+import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
 import { Provider } from "./Context.jsx";
 
+const Me = React.lazy(() => import("./Me.jsx"));
 const Forgot = React.lazy(() => import("./Forgot.jsx"));
 const Signup = React.lazy(() => import("./Signup.jsx"));
 const AccountsHome = React.lazy(() => import("./AccountsHome.jsx"));
@@ -99,7 +101,7 @@ class App extends Component {
                       )
                     }
                   />
-                  <React.Suspense fallback={"Loading guise!"}>
+                  <React.Suspense fallback={<LoadingPlaceholder message= "Waiting to get access to your own funds. How 2008."/>}>
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/forgot" component={Forgot} />
                     <Route
@@ -109,21 +111,21 @@ class App extends Component {
                     />
                     <Route exact path="/account" component={AccountsHome} />
                     <Route exact path="/self" component={SelfRoot} />
+                    <Route
+                      exact
+                      path="/me"
+                      render={() =>
+                        !this.state.loggedIn ? (
+                          <Redirect to="/" />
+                        ) : (
+                          <Me
+                            onLogout={this.handleLogout}
+                            saveUserToContext={this.handleSaveUserToContext}
+                          />
+                        )
+                      }
+                    />
                   </React.Suspense>
-                  <Route
-                    exact
-                    path="/me"
-                    render={() =>
-                      !this.state.loggedIn ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <Me
-                          onLogout={this.handleLogout}
-                          saveUserToContext={this.handleSaveUserToContext}
-                        />
-                      )
-                    }
-                  />
                 </RouteContainer>
               </RootContent>
             </ThemeProvider>
