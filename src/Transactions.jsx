@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import TransactionsHeader from "./TransactionsHeader.jsx";
+import TransactionsContainer from "./TransactionsContainer.jsx";
 import axios from "axios";
-
-const StyledHeader = styled.section`
-  display: flex;
-  justify-content: space-between;
-`;
 
 class Transactions extends Component {
   state = {
@@ -52,23 +48,18 @@ class Transactions extends Component {
       return (
         <div>
           <h1>Your Recent Transactions</h1>
-          <StyledHeader>
-            <span>Type</span>
-            <span>Sender</span>
-            <span>Receiver</span>
-            <span>Amount</span>
-          </StyledHeader>
+          <TransactionsHeader />
           <section>
             {data.map(item => {
               let accountNameShown = "";
 
               return (
-                <p>
-                  <span>{item.type} || </span>
-                  <span>{item.sender_id} || </span>
-                  <span>{item.receiver_id} || </span>
-                  <span>{item.amount} || </span>
-                </p>
+                <TransactionsContainer
+                  type={item.type}
+                  sender={item.sender_id}
+                  receiver={item.receiver_id}
+                  amount={item.amount}
+                />
               );
             })}
           </section>

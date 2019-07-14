@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FeedCard from "./FeedCard.jsx";
 import AccountCreationForm from "./AccountCreationForm.jsx";
 import TwoColumn from "./TwoColumn.jsx";
 import Accounts from "./Accounts.jsx";
@@ -29,9 +28,7 @@ class AccountsHome extends Component {
     return (
       <TwoColumn>
         <AccountCreationForm />
-        <FeedCard>
-          <Accounts accounts={accounts} />
-        </FeedCard>
+        <Accounts accounts={accounts} />
       </TwoColumn>
     );
   }

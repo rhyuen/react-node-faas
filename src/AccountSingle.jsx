@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import axios from "axios";
 import TwoColumn from "./TwoColumn.jsx";
+import TransactionsHeader from "./TransactionsHeader.jsx";
+import TransactionsContainer from "./TransactionsContainer.jsx";
 import FeedCard from "./FeedCard.jsx";
 import AccountTransactionForm from "./AccountTransactionForm.jsx";
 
@@ -55,6 +56,7 @@ class AccountSingle extends Component {
         <FeedCard>
           <h1>Recent Account Transactions</h1>
           <section>
+            <TransactionsHeader />
             {loading ? (
               <div>Loading details...</div>
             ) : data.length === 0 ? (
@@ -62,12 +64,12 @@ class AccountSingle extends Component {
             ) : (
               data.map(item => {
                 return (
-                  <TxContainer>
-                    <TxType>{item.type}</TxType>
-                    <TxCell>{item.sender_id}</TxCell>
-                    <TxCell>{item.receiver_id}</TxCell>
-                    <TxTotal>{item.amount}</TxTotal>
-                  </TxContainer>
+                  <TransactionsContainer
+                    type={item.type}
+                    sender={item.sender_id}
+                    receiver={item.receiver_id}
+                    amount={item.amount}
+                  />
                 );
               })
             )}
@@ -77,26 +79,5 @@ class AccountSingle extends Component {
     );
   }
 }
-
-const TxContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-  padding: 10px 0;
-`;
-const TxCell = styled.span`
-  font-size: 12px;
-`;
-const TxCellSmall = styled.span`
-  text-transform: uppercase;
-  font-size: 16px;
-  font-weight: bold;
-`;
-const TxType = styled(TxCellSmall)`
-  text-align: left;
-  overflow-x: hidden;
-`;
-const TxTotal = styled(TxCellSmall)`
-  padding-left: 20px;
-`;
 
 export default AccountSingle;
