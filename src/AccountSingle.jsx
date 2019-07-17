@@ -5,6 +5,8 @@ import TransactionsHeader from "./TransactionsHeader.jsx";
 import TransactionsContainer from "./TransactionsContainer.jsx";
 import FeedCard from "./FeedCard.jsx";
 import AccountTransactionForm from "./AccountTransactionForm.jsx";
+import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
+import EmptyPlaceholder from "./EmptyPlaceholder.jsx";
 
 class AccountSingle extends Component {
   state = {
@@ -19,8 +21,6 @@ class AccountSingle extends Component {
         withCredentials: true
       })
       .then(res => {
-        console.log("account single");
-        console.log(res.data);
         this.setState({
           loading: false,
           data: res.data.data
@@ -51,16 +51,20 @@ class AccountSingle extends Component {
             </strong>
           </section>
         </FeedCard>
-        <AccountTransactionForm account_id={this.props.match.params} />
+        <AccountTransactionForm
+          account_id={this.props.match.params.account_id}
+        />
 
         <FeedCard>
           <h1>Recent Account Transactions</h1>
           <section>
             <TransactionsHeader />
             {loading ? (
-              <div>Loading details...</div>
+              <LoadingPlaceholder message="Loading Details..." />
             ) : data.length === 0 ? (
-              <div>No recent transactions for this account.</div>
+              <EmptyPlaceholder>
+                No recent transactions for this account.
+              </EmptyPlaceholder>
             ) : (
               data.map(item => {
                 return (

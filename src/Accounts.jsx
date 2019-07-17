@@ -25,13 +25,12 @@ const Subheading = styled.h2`
 const Type = styled.span`
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.3);
-  font-size: 35px;
+  font-size: 30px;
   font-weight: bolder;
 `;
 const Balance = styled(Type)`
   color: black;
   margin-left: 20px;
-  min-width: 80px;
 `;
 class Accounts extends Component {
   render() {

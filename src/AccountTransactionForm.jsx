@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import FeedCard from "./FeedCard.jsx";
 import UpdatedInputButton from "./UpdatedInputButton.jsx";
+import WarningBox from "./WarningBox.jsx";
 import FormTextInput from "./FormTextInput.jsx";
 import axios from "axios";
 
@@ -13,7 +14,8 @@ class AccountTransactionForm extends Component {
   state = {
     type: "deposit",
     amount: 0.0,
-    transferTarget: "None"
+    transferTarget: "None",
+    isBadInputWarningVisible: false
   };
 
   handleFormChange = e => {
@@ -41,6 +43,14 @@ class AccountTransactionForm extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     const { type, amount, transferTarget } = this.state;
+
+    if (amount <= 0) {
+      return this.setState({
+        amount: 0,
+        isBadInputWarningVisible: true
+      });
+    }
+
     const url = "/api/createTransaction";
     axios
       .post(
@@ -57,35 +67,53 @@ class AccountTransactionForm extends Component {
       .finally(() => {
         console.log("Account Transaction was dispatched.");
         this.setState({
-          amount: 0
+          amount: 0.0
         });
       });
   };
 
   render() {
-    const { type } = this.state;
+    const {
+      type,
+      amount,
+      transferTarget,
+      isBadInputWarningVisible
+    } = this.state;
     return (
       <FeedCard>
         <h1>New Transaction</h1>
         <form onSubmit={this.handleFormSubmit}>
-          <FormTextInput type="number" name="amount" placeholder="0.00" />
+          <FormTextInput
+            type="number"
+            name="amount"
+            value={amount}
+            onChange={this.handleFormChange}
+            placeholder={0.0}
+          />
           <div>
             {type === "transfer" ? (
               <FormTextInput
                 type="text"
                 name="transferTarget"
+                value={transferTarget}
                 placeholder="000000-0000-0000-000000"
                 onChange={this.handleFormChange}
               />
             ) : null}
           </div>
           <FormControl>
-            <select onChange={this.handleFormChange} name="type">
-              <option value="deposit">Deposit</option>
-              <option value="withdraw">Withdraw</option>
-              <option value="transfer">Transfer</option>
-            </select>
-
+            <section>
+              <select onChange={this.handleFormChange} name="type">
+                <option value="deposit">Deposit</option>
+                <option value="withdrawl">Withdraw</option>
+                <option value="transfer">Transfer</option>
+              </select>
+              {isBadInputWarningVisible ? (
+                <WarningBox>
+                  Amounts for Transaction need to be greater than 0.00.
+                </WarningBox>
+              ) : null}
+            </section>
             <UpdatedInputButton
               type="submit"
               value="Execute"

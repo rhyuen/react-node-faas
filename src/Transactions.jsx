@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TransactionsHeader from "./TransactionsHeader.jsx";
 import TransactionsContainer from "./TransactionsContainer.jsx";
 import axios from "axios";
+import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
 
 class Transactions extends Component {
   state = {
@@ -39,10 +40,7 @@ class Transactions extends Component {
     let { loading, data } = this.state;
     if (loading) {
       return (
-        <div>
-          <h1>Loading Transactions</h1>
-          <p>Filler text goes here.</p>
-        </div>
+        <LoadingPlaceholder message="Waiting for your transactions to load..." />
       );
     } else {
       return (

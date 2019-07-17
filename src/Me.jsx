@@ -1,18 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import TwoColumn from "./TwoColumn.jsx";
 import Accounts from "./Accounts.jsx";
 import FeedCard from "./FeedCard.jsx";
 import Transactions from "./Transactions.jsx";
-
-// const FeedCard = styled.div`
-//   background: white;
-//   border: 1px solid rgba(0, 0, 0, 0.1);
-//   padding: 10px 20px;
-//   width: 100%;
-//   margin-bottom: 20px;
-// `;
 
 class Me extends Component {
   state = {
