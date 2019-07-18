@@ -7,6 +7,7 @@ import FeedCard from "./FeedCard.jsx";
 import AccountTransactionForm from "./AccountTransactionForm.jsx";
 import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
 import EmptyPlaceholder from "./EmptyPlaceholder.jsx";
+import AccountSingleGeneralDetails from "./AccountSingleGeneralDetails.jsx";
 
 class AccountSingle extends Component {
   state = {
@@ -35,22 +36,11 @@ class AccountSingle extends Component {
       .finally(() => {});
   }
   render() {
+    const { account_id } = this.props.match.params;
     const { data, loading } = this.state;
     return (
       <TwoColumn>
-        <FeedCard>
-          <h1>About this account: ___</h1>
-          <section>
-            <p>Current Balance: </p>
-            <p>Account Type: </p>
-            <p>Created On: </p>
-            <p>Last Modified: </p>
-            <strong>
-              JL10: Fix the query so common information is in one field and not
-              duplicated.
-            </strong>
-          </section>
-        </FeedCard>
+        <AccountSingleGeneralDetails account_id={account_id} />
         <AccountTransactionForm
           account_id={this.props.match.params.account_id}
         />

@@ -34,7 +34,6 @@ module.exports = async (req, res) => {
             rows
         } = await db.query(insert, [uuid.v4(), email, hash]);
 
-        //TODO: Make an account by default.
         const makeFirstAccount = `insert into 
             public.accounts (account_id, user_id, account_name, type) 
             values ($1, $2, $3, 'savings') returning *`;
@@ -43,11 +42,9 @@ module.exports = async (req, res) => {
             [uuid.v4(), rows[0].user_id, 'Your First Account']
         );
 
-        console.log("First Account Made");
         console.log(acctsResult.rows[0].account_id);
 
         const payload = {
-            rows: rows,
             message: "Sign-up success."
         };
         res.statusCode = 200;
