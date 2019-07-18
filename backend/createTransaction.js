@@ -74,7 +74,7 @@ module.exports = async (req, res) => {
 
         if (((type === "transfer") || (type === "withdrawl")) && !validator.isUUID(transferTarget, 4)) {
             console.log("TransferTarget is not a valid account.");
-            response.sendJSON(req, res, 400, "TransferTarget is not a valid account.");
+            respond.sendJSON(req, res, 400, "TransferTarget is not a valid account.");
         }
 
         //TODO: FED: Show prompt if value is larger than current value of acct for WITHDRAW AND TRANSFER        
