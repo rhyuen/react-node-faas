@@ -30,11 +30,21 @@ const TxTotal = styled(TxCellSmall)`
 `;
 
 const TransactionsContainer = ({ type, sender, receiver, amount }) => {
+  let revealedSender = sender;
+  let revealedReceiver = receiver;
+  if (sender === "00000000-0000-0000-0000-000000000002") {
+    revealedSender = "CASH DEPOSIT";
+  }
+
+  if (receiver === "00000000-0000-0000-0000-000000000001") {
+    revealedReceiver = "CASH WITHDRAWL";
+  }
+
   return (
     <TxContainer>
       <TxType>{type}</TxType>
-      <TxCell>{sender}</TxCell>
-      <TxCell>{receiver}</TxCell>
+      <TxCell>{revealedSender}</TxCell>
+      <TxCell>{revealedReceiver}</TxCell>
       <TxTotal>{amount}</TxTotal>
     </TxContainer>
   );

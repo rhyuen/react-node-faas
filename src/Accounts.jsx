@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import EmptyPlaceholder from "./EmptyPlaceholder.jsx";
 import StyledOptionLink from "./StyledOptionLink.jsx";
 import FeedCard from "./FeedCard.jsx";
 
@@ -38,26 +39,28 @@ class Accounts extends Component {
     return (
       <FeedCard>
         <h1>My Accounts</h1>
-        {accounts === null
-          ? "Nothing to load"
-          : accounts.map(item => {
-              return (
-                <AccountItemRoot>
-                  <section>
-                    <StyledOptionLink to={`/account/${item.account_id}`}>
-                      {item.account_name}
-                    </StyledOptionLink>
-                    <br />
-                    <Subheading>{item.account_id}</Subheading>
-                  </section>
+        {accounts === null ? (
+          <EmptyPlaceholder>No accounts to show.</EmptyPlaceholder>
+        ) : (
+          accounts.map(item => {
+            return (
+              <AccountItemRoot>
+                <section>
+                  <StyledOptionLink to={`/account/${item.account_id}`}>
+                    {item.account_name}
+                  </StyledOptionLink>
+                  <br />
+                  <Subheading>{item.account_id}</Subheading>
+                </section>
 
-                  <section>
-                    <Type>{item.type}</Type>
-                    <Balance>{item.balance}</Balance>
-                  </section>
-                </AccountItemRoot>
-              );
-            })}
+                <section>
+                  <Type>{item.type}</Type>
+                  <Balance>{item.balance}</Balance>
+                </section>
+              </AccountItemRoot>
+            );
+          })
+        )}
       </FeedCard>
     );
   }

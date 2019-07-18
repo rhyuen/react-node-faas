@@ -9,6 +9,7 @@ const {
     promisify
 } = require("util");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 const jwtVerify = promisify(jwt.verify);
 
 module.exports = async (req, res) => {
@@ -71,11 +72,12 @@ module.exports = async (req, res) => {
             respond.sendJSON(req, res, 400, "You sent an amount that is greater than the amount in this account.");
         }
 
+        if (((type === "transfer") || (type === "withdrawl")) && !validator.isUUID(transferTarget, 4)) {
+            console.log("TransferTarget is not a valid account.");
+            response.sendJSON(req, res, 400, "TransferTarget is not a valid account.");
+        }
 
-
-        //TODO: You cannot withdraw more funds than you own.  
-        //TODO: FED: Show prompt if value is larger than current value of acct for WITHDRAW AND TRANSFER
-        //TODO: You cannot transfer more than is in your account.
+        //TODO: FED: Show prompt if value is larger than current value of acct for WITHDRAW AND TRANSFER        
         //TODO: JOI validation for 'transferTarget',  only uuids allowed.
 
 

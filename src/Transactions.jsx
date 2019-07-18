@@ -3,12 +3,13 @@ import TransactionsHeader from "./TransactionsHeader.jsx";
 import TransactionsContainer from "./TransactionsContainer.jsx";
 import axios from "axios";
 import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
+import EmptyPlaceholder from "./EmptyPlaceholder.jsx";
 
 class Transactions extends Component {
   state = {
     loading: true,
     error: false,
-    data: ""
+    data: []
   };
 
   componentDidMount() {
@@ -48,18 +49,22 @@ class Transactions extends Component {
           <h1>Your Recent Transactions</h1>
           <TransactionsHeader />
           <section>
-            {data.map(item => {
-              let accountNameShown = "";
-
-              return (
-                <TransactionsContainer
-                  type={item.type}
-                  sender={item.sender_id}
-                  receiver={item.receiver_id}
-                  amount={item.amount}
-                />
-              );
-            })}
+            {data.length === 0 ? (
+              <EmptyPlaceholder>
+                You haven't made any recent transactions.
+              </EmptyPlaceholder>
+            ) : (
+              data.map(item => {
+                return (
+                  <TransactionsContainer
+                    type={item.type}
+                    sender={item.sender_id}
+                    receiver={item.receiver_id}
+                    amount={item.amount}
+                  />
+                );
+              })
+            )}
           </section>
         </div>
       );
