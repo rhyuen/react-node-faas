@@ -4,13 +4,14 @@ import styled from "styled-components";
 const TxContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-  padding: 10px 0;
+  padding: 10px
+  border-radius: 2px;
   &:hover {
     background: ${props => props.theme.borderColour};
     border-radius: 2px;
   }
   &:first-child {
-    padding-top: 30px;
+    margin-top: 20px;
   }
 `;
 const TxCell = styled.span`
@@ -29,15 +30,51 @@ const TxTotal = styled(TxCellSmall)`
   padding-left: 20px;
 `;
 
-const TransactionsContainer = ({ type, sender, receiver, amount }) => {
+const TransactionsContainer = ({ type, sender, receiver, amount, owner }) => {
   let revealedSender = sender;
   let revealedReceiver = receiver;
-  if (sender === "00000000-0000-0000-0000-000000000002") {
-    revealedSender = "CASH DEPOSIT";
-  }
 
-  if (receiver === "00000000-0000-0000-0000-000000000001") {
-    revealedReceiver = "CASH WITHDRAWL";
+  // if (!owner) {
+  //   if (sender === "00000000-0000-0000-0000-000000000002") {
+  //     revealedSender = "CASH DEPOSIT";
+  //   }
+
+  //   if (receiver === "00000000-0000-0000-0000-000000000001") {
+  //     revealedReceiver = "CASH WITHDRAWL";
+  //   }
+  // }
+
+  switch (type) {
+    case "deposit":
+      if (sender === "00000000-0000-0000-0000-000000000002") {
+        revealedSender = "CASH DEPOSIT";
+      }
+
+      if (receiver === owner) {
+        revealedReceiver = "THIS ACCOUNT";
+      }
+      break;
+    case "withdrawl":
+      if (receiver === "00000000-0000-0000-0000-000000000001") {
+        revealedReceiver = "CASH WITHDRAWL";
+      }
+
+      if (sender === owner) {
+        revealedSender = "THIS ACCOUNT";
+      }
+
+      break;
+    case "transfer":
+      if (receiver === owner) {
+        revealedReceiver = "THIS ACCOUNT";
+      } else if (sender === owner) {
+        revealedSender = "THIS ACCOUNT";
+      }
+      console.log("transfer case");
+
+      break;
+    default:
+      console.log("Account numbers because default case.");
   }
 
   return (

@@ -5,13 +5,13 @@ import StyledOptionLink from "./StyledOptionLink.jsx";
 import FeedCard from "./FeedCard.jsx";
 
 const AccountItemRoot = styled.div`
-  padding: 5px 0;
+  padding: 5px;
   display: flex;
   justify-content: space-between;
 
   &:hover {
     background-color: ${props => props.theme.borderColour};
-    border-radius: 2px;
+    border-radius: 3px;
   }
 `;
 

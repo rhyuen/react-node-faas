@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import FeedCard from "./FeedCard.jsx";
 import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
@@ -48,14 +49,14 @@ class AccountSingleGeneralDetails extends Component {
             <h1>
               About your account: <i>{data[0].account_name}</i>
               <br />
-              Account#: <i>{data[0].account_id}</i>
+              Account #: <i>{data[0].account_id}</i>
             </h1>
-            <section>
+            <AccountDetailsTable>
               <p>
                 Current Balance: <strong>{data[0].balance}</strong>
               </p>
               <p>
-                Account Type: <strong>{data[0].type}</strong>
+                Account Type: <strong>{data[0].type.toUpperCase()}</strong>
               </p>
               <p>
                 Created On: <strong>{data[0].created_at.split("T")[0]}</strong>
@@ -64,12 +65,18 @@ class AccountSingleGeneralDetails extends Component {
                 Last Modified:{" "}
                 <strong>{data[0].last_modified.split("T")[0]}</strong>
               </p>
-            </section>
+            </AccountDetailsTable>
           </div>
         )}
       </FeedCard>
     );
   }
 }
+
+const AccountDetailsTable = styled.section`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(auto, 200px));
+  grid-template-rows: repeat(2, minmax(auto, 30px));
+`;
 
 export default AccountSingleGeneralDetails;

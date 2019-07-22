@@ -12,6 +12,7 @@ const Cell = styled.span`
   font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
+  padding: 0 10px;
 `;
 
 const TotalCell = styled(Cell)`

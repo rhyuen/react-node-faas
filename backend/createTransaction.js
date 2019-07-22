@@ -39,22 +39,26 @@ module.exports = async (req, res) => {
         console.log(transferTarget);
         console.log(origin);
 
+        //Ensures that the account being acted on is in the token.
         if (!listOfAccounts.has(origin)) {
             console.log(`${origin} is not in the accounts in the token.`);
             return respond.sendJSON(req, res, 400, "Source Acct is not in the Token.");
         }
 
+        //Ensures that the action to be taken is valid (Withdrawl, Deposit, Transfer).
         const typesOfTransactions = new Set(["withdrawl", "deposit", "transfer"]);
         if (!typesOfTransactions.has(type)) {
             console.log(`${type} is not valid as a transaction type.`);
             return respond.sendJSON(req, res, 400, "Invalid Transaction Type in POST.");
         }
 
+        //Ensures Amount is of valid Type
         if (typeof parsedAmount !== 'number') {
             console.log("Amount is not a number");
             return respond.sendJSON(req, res, 400, `${parsedAmount} is not a number`);
         }
 
+        //Ensures Amount is NOT NEGATIVE
         if (parsedAmount <= 0) {
             console.log("Amount is less than or equal to 0.");
             return respond.sendJSON(req, res, 400, `${parsedAmount} is equal to or less than 0`);
@@ -66,15 +70,17 @@ module.exports = async (req, res) => {
         console.log(currentAccountBalance.rows);
         console.log("END curr account balance");
 
+        //Ensures Amount for TRANSFER OR WITHDRAWL does not exceed current amount
         if ((currentAccountBalance.rows[0].balance < parsedAmount) &&
             ((type === "transfer") || (type === "withdrawl"))) {
             console.log(`'${parsedAmount}' is an amount that is greater than the amount in this account.`);
-            respond.sendJSON(req, res, 400, "You sent an amount that is greater than the amount in this account.");
+            return respond.sendJSON(req, res, 400, "You sent an amount that is greater than the amount in this account.");
         }
 
-        if (((type === "transfer") || (type === "withdrawl")) && !validator.isUUID(transferTarget, 4)) {
+        //Ensures Transfer Target is a UUID
+        if ((type === "transfer" && !validator.isUUID(transferTarget, 4))) {
             console.log("TransferTarget is not a valid account.");
-            respond.sendJSON(req, res, 400, "TransferTarget is not a valid account.");
+            return respond.sendJSON(req, res, 400, "TransferTarget is not a valid account.");
         }
 
         //TODO: FED: Show prompt if value is larger than current value of acct for WITHDRAW AND TRANSFER        
@@ -144,7 +150,7 @@ module.exports = async (req, res) => {
         }
     } catch (e) {
         console.log(e);
-        respond.sendError(req, res, 500, e);
+        return respond.sendError(req, res, 500, e);
     }
 
 }

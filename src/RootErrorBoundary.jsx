@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FeedCard from "./FeedCard.jsx";
 
 export default class RootErrorBoundary extends Component {
   state = {
@@ -17,6 +18,16 @@ export default class RootErrorBoundary extends Component {
   render() {
     const { isError } = this.state;
     const { children } = this.props;
-    return isError ? <section>An error occurred.</section> : children;
+    return isError ? (
+      <FeedCard>
+        <h1>Somehow, we've come across some computer problems.</h1>
+        <p>
+          An error occurred has unforuntately occurred. Click{" "}
+          <a href="/">Here</a> to go back to the home page.
+        </p>
+      </FeedCard>
+    ) : (
+      children
+    );
   }
 }

@@ -5,7 +5,7 @@ exports.sendJSON = (req, res, status = 200, data, message = "No message added.")
         data: data,
         message: message
     };
-    res.end(JSON.stringify(payload));
+    return res.end(JSON.stringify(payload));
 };
 
 exports.sendError = (req, res, status, errorObject) => {
@@ -32,5 +32,5 @@ exports.sendError = (req, res, status, errorObject) => {
     }
     res.statusCode = status;
     res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(errorPayload));
+    return res.end(JSON.stringify(errorPayload));
 };

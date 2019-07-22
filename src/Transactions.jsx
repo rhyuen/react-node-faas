@@ -61,6 +61,7 @@ class Transactions extends Component {
                     sender={item.sender_id}
                     receiver={item.receiver_id}
                     amount={item.amount}
+                    owner="Robert"
                   />
                 );
               })

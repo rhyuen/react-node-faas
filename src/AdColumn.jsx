@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Cardless from "./Cardless.jsx";
+import AdRelatedLinks from "./AdReleatedLinks.jsx";
 
 const Root = styled.section`
   display: flex;
@@ -26,17 +27,7 @@ class AdColumn extends Component {
             smart home devices.
           </section>
         </Cardless>
-        <Cardless>
-          <Header>Related Links</Header>
-          <section>
-            The idea of the Web of Things is to create a decentralized Internet
-            of Things by giving things URLs on the web to make them linkable and
-            discoverable, and defining a standard data model and APIs to make
-            them interoperable. The Web of Things is intended as a unifying
-            application layer for the Internet of Things (IoT), linking together
-            multiple underlying IoT protocols using existing web technologies.
-          </section>
-        </Cardless>
+        <AdRelatedLinks />
       </Root>
     );
   }
