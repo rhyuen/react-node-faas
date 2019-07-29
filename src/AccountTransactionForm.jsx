@@ -4,6 +4,7 @@ import FeedCard from "./FeedCard.jsx";
 import UpdatedInputButton from "./UpdatedInputButton.jsx";
 import WarningBox from "./WarningBox.jsx";
 import FormTextInput from "./FormTextInput.jsx";
+import Modal from "./Modal.jsx";
 import axios from "axios";
 
 const FormControl = styled.div`
@@ -15,7 +16,9 @@ class AccountTransactionForm extends Component {
     type: "deposit",
     amount: 0.0,
     transferTarget: "None",
-    isBadInputWarningVisible: false
+    isBadInputWarningVisible: false,
+    isModalVisible: false,
+    modalText: ""
   };
 
   handleFormChange = e => {
@@ -60,16 +63,31 @@ class AccountTransactionForm extends Component {
       )
       .then(res => {
         console.log(res.data.data);
+
+        this.props.onTransactionCreation(res.data.data[0]);
+
+        //TODO: Handle Different Bad Input Error cases here.
+        this.setState({
+          amount: 0.0,
+          isModalVisible: true,
+          modalText: `Your transaction was completed.`
+        });
       })
       .catch(e => {
         console.log(e);
-      })
-      .finally(() => {
-        console.log("Account Transaction was dispatched.");
         this.setState({
-          amount: 0.0
+          amount: 0.0,
+          isModalVisible: true,
+          modalText: `Something has gone wrong with your transaction: ${e}`
         });
-      });
+      })
+      .finally(() => {});
+  };
+
+  handleModalCloseButton = () => {
+    this.setState({
+      isModalVisible: false
+    });
   };
 
   render() {
@@ -77,11 +95,18 @@ class AccountTransactionForm extends Component {
       type,
       amount,
       transferTarget,
-      isBadInputWarningVisible
+      isBadInputWarningVisible,
+      isModalVisible,
+      modalText
     } = this.state;
     return (
       <FeedCard>
         <h1>New Transaction</h1>
+        {isModalVisible ? (
+          <Modal handleCloseButton={this.handleModalCloseButton}>
+            {modalText}
+          </Modal>
+        ) : null}
         <form onSubmit={this.handleFormSubmit}>
           <FormTextInput
             type="number"

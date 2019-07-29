@@ -2,6 +2,8 @@
 
 React and Node Boilerplate in FAAS for use on Zeit Now.
 
+TODO:
+
 > JL18/19: Add paging to transactions.
 > JL18/19: Add Account Deletion.
 > JL18/19: Make transactions/account creation instant.

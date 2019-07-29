@@ -73,10 +73,16 @@ class AccountSingleGeneralDetails extends Component {
   }
 }
 
+//TODO: IF screen size < 1200 px, make it flexbox and flex-direction column;
 const AccountDetailsTable = styled.section`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(auto, 200px));
-  grid-template-rows: repeat(2, minmax(auto, 30px));
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(auto, 200px));
+    grid-template-rows: repeat(2, minmax(auto, 30px));
+  }
 `;
 
 export default AccountSingleGeneralDetails;

@@ -13,7 +13,6 @@ class AccountsHome extends Component {
       .get("/api/accounts", { useCredentials: true })
       .then(res => {
         const accounts = res.data.data.data;
-        console.log(accounts);
         this.setState({
           accounts: accounts
         });
@@ -23,11 +22,22 @@ class AccountsHome extends Component {
       });
   }
 
+  handleAccountCreationResult = result => {
+    this.setState(ps => {
+      return {
+        ...ps,
+        accounts: ps.accounts.concat(result)
+      };
+    });
+  };
+
   render() {
     const { accounts } = this.state;
     return (
       <TwoColumn>
-        <AccountCreationForm />
+        <AccountCreationForm
+          updateAccounts={this.handleAccountCreationResult}
+        />
         <Accounts accounts={accounts} />
       </TwoColumn>
     );

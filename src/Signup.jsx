@@ -139,19 +139,15 @@ class Signup extends Component {
     return (
       <Card>
         {this.state.isEmailDuplicateModalVisible ? (
-          <Modal>
-            <h1>That Identifier is already taken.</h1>
-            <button onClick={this.handleModalClose}>Close</button>
+          <Modal handleCloseButton={this.handleModalClose}>
+            That Identifier is already taken.
           </Modal>
         ) : null}
 
         {this.state.isConfirmationVisible ? (
-          <Modal>
-            <h1>Your account has been created.</h1>
-            <button onClick={this.handleModalClose}>Close</button>
-            <h2>
-              Click <Link to="/">here</Link> to login.
-            </h2>
+          <Modal handleCloseButton={this.handleModalClose}>
+            Your account has been created. Click <Link to="/">here</Link> to
+            login.
           </Modal>
         ) : null}
 

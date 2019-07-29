@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import TwoColumn from "./TwoColumn.jsx";
 import Accounts from "./Accounts.jsx";
-import FeedCard from "./FeedCard.jsx";
 import Transactions from "./Transactions.jsx";
 
 class Me extends Component {
@@ -47,9 +46,7 @@ class Me extends Component {
     return (
       <TwoColumn>
         <Accounts accounts={accounts} />
-        <FeedCard>
-          <Transactions />
-        </FeedCard>
+        <Transactions accounts={accounts} />
       </TwoColumn>
     );
   }

@@ -30,16 +30,24 @@ const TxTotal = styled(TxCellSmall)`
   padding-left: 20px;
 `;
 
-const TransactionsContainer = ({ transaction, owner }) => {
-  const { type, amount, sender_id, receiver_id } = transaction;
-
+const TransactionsContainerGeneral = ({ transaction, accounts }) => {
+  const { type, sender_id, receiver_id, amount } = transaction;
   let revealedSender = sender_id;
   let revealedReceiver = receiver_id;
 
-  console.log(revealedSender);
-  console.log(revealedReceiver);
+  const senderInAccounts = accounts.filter(
+    acct => acct.account_id === sender_id
+  );
+  if (senderInAccounts.length === 1) {
+    revealedSender = senderInAccounts[0].account_name;
+  }
 
-  console.log(owner);
+  const receiverInAccounts = accounts.filter(
+    acct => acct.account_id === receiver_id
+  );
+  if (receiverInAccounts.length === 1) {
+    revealedReceiver = receiverInAccounts[0].account_name;
+  }
 
   switch (type) {
     case "deposit":
@@ -47,27 +55,11 @@ const TransactionsContainer = ({ transaction, owner }) => {
         revealedSender = "CASH DEPOSIT";
       }
 
-      if (receiver_id === owner) {
-        revealedReceiver = "THIS ACCOUNT";
-      }
       break;
     case "withdrawl":
       if (receiver_id === "00000000-0000-0000-0000-000000000001") {
         revealedReceiver = "CASH WITHDRAWL";
       }
-
-      if (sender_id === owner) {
-        revealedSender = "THIS ACCOUNT";
-      }
-
-      break;
-    case "transfer":
-      if (receiver_id === owner) {
-        revealedReceiver = "THIS ACCOUNT";
-      } else if (sender_id === owner) {
-        revealedSender = "THIS ACCOUNT";
-      }
-      console.log("transfer case");
 
       break;
     default:
@@ -77,11 +69,11 @@ const TransactionsContainer = ({ transaction, owner }) => {
   return (
     <TxContainer>
       <TxType>{type}</TxType>
-      <TxCell>{revealedSender}</TxCell>
-      <TxCell>{revealedReceiver}</TxCell>
+      <TxCell title={sender_id}>{revealedSender}</TxCell>
+      <TxCell title={receiver_id}>{revealedReceiver}</TxCell>
       <TxTotal>{amount}</TxTotal>
     </TxContainer>
   );
 };
 
-export default TransactionsContainer;
+export default TransactionsContainerGeneral;

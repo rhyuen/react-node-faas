@@ -35,6 +35,16 @@ class AccountSingle extends Component {
       })
       .finally(() => {});
   }
+
+  handleTransactionCreation = latestTranasction => {
+    this.setState(ps => {
+      return {
+        ...ps,
+        data: ps.data.concat(latestTranasction)
+      };
+    });
+  };
+
   render() {
     const { account_id } = this.props.match.params;
     const { data, loading } = this.state;
@@ -43,6 +53,7 @@ class AccountSingle extends Component {
         <AccountSingleGeneralDetails account_id={account_id} />
         <AccountTransactionForm
           account_id={this.props.match.params.account_id}
+          onTransactionCreation={this.handleTransactionCreation}
         />
 
         <FeedCard>
@@ -59,10 +70,7 @@ class AccountSingle extends Component {
               data.map(item => {
                 return (
                   <TransactionsContainer
-                    type={item.type}
-                    sender={item.sender_id}
-                    receiver={item.receiver_id}
-                    amount={item.amount}
+                    transaction={item}
                     owner={account_id}
                   />
                 );

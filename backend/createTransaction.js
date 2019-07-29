@@ -95,30 +95,28 @@ module.exports = async (req, res) => {
                 const beginResultD = await db.query(`begin;`);
                 const originUpdateD = await db.query(`update accounts set balance = balance + $1 where account_id = $2;`, [parsedAmount, origin]);
                 const bankUpdateD = await db.query(`update accounts set balance = balance - $1 where account_id = $2;`, [parsedAmount, moneyBeingDeposited]);
-                const {
-                    rowsD
-                } = await db.query(`insert into transactions (transaction_id, sender_id, receiver_id, type, amount) 
+                const
+                    rowsD = await db.query(`insert into transactions (transaction_id, sender_id, receiver_id, type, amount) 
             values ($1, $2, $3, $4, $5) returning *;`,
-                    [uuid.v4(), moneyBeingDeposited, origin, type, parsedAmount]
-                );
+                        [uuid.v4(), moneyBeingDeposited, origin, type, parsedAmount]
+                    );
                 const commitResultD = await db.query(`commit;`);
                 console.log(beginResultD);
                 console.log(originUpdateD);
                 console.log(bankUpdateD);
                 console.log(commitResultD)
 
-                return respond.sendJSON(req, res, 200, rowsD, "Deposit: Create Transaction Deposit");
+                return respond.sendJSON(req, res, 200, rowsD.rows, "Deposit: Create Transaction Deposit");
             case "withdrawl":
                 const beginResultW = await db.query(`begin;`);
                 const originUpdateW = await db.query(`update accounts set balance = balance + $1 where account_id = $2;`, [parsedAmount, moneyBeingWithdrawn]);
                 const bankUpdateW = await db.query(`update accounts set balance = balance - $1 where account_id = $2;`, [parsedAmount, origin]);
-                const {
-                    rowsW
-                } = await db.query(`insert into transactions 
+                const
+                    rowsW = await db.query(`insert into transactions 
                     (transaction_id, sender_id, receiver_id, type, amount) 
                     values ($1, $2, $3, $4, $5) returning *;`,
-                    [uuid.v4(), origin, moneyBeingWithdrawn, type, parsedAmount]
-                );
+                        [uuid.v4(), origin, moneyBeingWithdrawn, type, parsedAmount]
+                    );
                 const commitResultW = await db.query(`commit;`);
 
                 console.log(beginResultW);
@@ -126,25 +124,24 @@ module.exports = async (req, res) => {
                 console.log(bankUpdateW);
                 console.log(commitResultW)
 
-                return respond.sendJSON(req, res, 200, rowsW, "Withdrawl: Create Transaction Deposit");
+                return respond.sendJSON(req, res, 200, rowsW.rows, "Withdrawl: Create Transaction Deposit");
             case "transfer":
                 const beginResultT = await db.query(`begin;`);
                 const originUpdateT = await db.query(`update accounts set balance = balance + $1 where account_id = $2;`, [parsedAmount, transferTarget]);
                 const bankUpdateT = await db.query(`update accounts set balance = balance - $1 where account_id = $2;`, [parsedAmount, origin]);
-                const {
-                    rowsT
-                } = await db.query(`insert into transactions 
+                const
+                    rowsT = await db.query(`insert into transactions 
                     (transaction_id, sender_id, receiver_id, type, amount) 
                     values ($1, $2, $3, $4, $5) returning *;`,
-                    [uuid.v4(), origin, transferTarget, type, parsedAmount]
-                );
+                        [uuid.v4(), origin, transferTarget, type, parsedAmount]
+                    );
                 const commitResultT = await db.query(`commit;`);
                 console.log(beginResultT);
                 console.log(originUpdateT);
                 console.log(bankUpdateT);
                 console.log(commitResultT)
 
-                return respond.sendJSON(req, res, 200, rowsT, "Transfer: Create Transaction Deposit");
+                return respond.sendJSON(req, res, 200, rowsT.rows, "Transfer: Create Transaction Deposit");
             default:
                 return respond.sendJSON(req, res, 200, [], "Default Case Hit.");
         }

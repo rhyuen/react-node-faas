@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import TransactionsHeader from "./TransactionsHeader.jsx";
-import TransactionsContainer from "./TransactionsContainer.jsx";
+import TransactionsContainerGeneral from "./TransactionsContainerGeneral.jsx";
 import axios from "axios";
 import LoadingPlaceholder from "./LoadingPlaceholder.jsx";
 import EmptyPlaceholder from "./EmptyPlaceholder.jsx";
+import FeedCard from "./FeedCard.jsx";
 
 class Transactions extends Component {
   state = {
@@ -45,7 +46,7 @@ class Transactions extends Component {
       );
     } else {
       return (
-        <div>
+        <FeedCard>
           <h1>Your Recent Transactions</h1>
           <TransactionsHeader />
           <section>
@@ -56,18 +57,15 @@ class Transactions extends Component {
             ) : (
               data.map(item => {
                 return (
-                  <TransactionsContainer
-                    type={item.type}
-                    sender={item.sender_id}
-                    receiver={item.receiver_id}
-                    amount={item.amount}
-                    owner="Robert"
+                  <TransactionsContainerGeneral
+                    transaction={item}
+                    accounts={this.props.accounts}
                   />
                 );
               })
             )}
           </section>
-        </div>
+        </FeedCard>
       );
     }
   }

@@ -53,9 +53,8 @@ class Forgot extends Component {
     return (
       <Card>
         {this.state.isEmailConfirmationVisible ? (
-          <Modal>
-            <h1>An email with directions on what to do will arrive shortly.</h1>
-            <button onClick={this.handleModalClose}>Close</button>
+          <Modal handleCloseButton={this.handleModalClose}>
+            An email with directions on what to do will arrive shortly.
             <Link to="/">Go back to login</Link>
           </Modal>
         ) : null}
