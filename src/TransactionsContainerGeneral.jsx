@@ -31,7 +31,7 @@ const TxTotal = styled(TxCellSmall)`
 `;
 
 const TransactionsContainerGeneral = ({ transaction, accounts }) => {
-  const { type, sender_id, receiver_id, amount } = transaction;
+  const { created_at, type, sender_id, receiver_id, amount } = transaction;
   let revealedSender = sender_id;
   let revealedReceiver = receiver_id;
 
@@ -68,6 +68,7 @@ const TransactionsContainerGeneral = ({ transaction, accounts }) => {
 
   return (
     <TxContainer>
+      <TxType>{created_at.split("T")[0].slice(2)}</TxType>
       <TxType>{type}</TxType>
       <TxCell title={sender_id}>{revealedSender}</TxCell>
       <TxCell title={receiver_id}>{revealedReceiver}</TxCell>

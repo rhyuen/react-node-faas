@@ -33,11 +33,10 @@ class Modal extends Component {
           </ModalClose>
           <ModalContent>
             <div>{this.props.children}</div>
-            <div>
-              <ModalConfirmation onClick={this.props.handleCloseButton}>
-                OK
-              </ModalConfirmation>
-            </div>
+
+            <ModalConfirmation onClick={this.props.handleCloseButton}>
+              Okay, I know.
+            </ModalConfirmation>
           </ModalContent>
         </ModalCard>
       </ModalStyle>,
@@ -70,11 +69,13 @@ const ModalContent = styled.section`
 `;
 
 const ModalConfirmation = styled.button`
-  border: 1px solid ${props => props.theme.primaryColour};
+  margin-top: 30px;
+  border: 2px solid ${props => props.theme.primaryColour};
   border-radius: 2px;
   color: white;
-  padding: 10px;
+  padding: 5px 10px;
   font-size: 16px;
+  font-weight: bold;
   text-transform: uppercase;
   background-color: ${props => props.theme.primaryColour};
 

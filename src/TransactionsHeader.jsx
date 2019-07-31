@@ -22,6 +22,7 @@ const TotalCell = styled(Cell)`
 const TransactionsHeader = props => {
   return (
     <TxContainer>
+      <Cell title="YYYY/MM/DD">Date</Cell>
       <Cell>Type</Cell>
       <Cell>Sender</Cell>
       <Cell>Receiver</Cell>

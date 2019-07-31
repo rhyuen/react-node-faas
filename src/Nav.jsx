@@ -40,17 +40,15 @@ const StyledLink = styled(Link)`
     border-bottom: 3px solid ${props => props.theme.primaryColour};  
 `;
 
-const SelfArea = styled.section`
+const ProfileLink = styled(Link)`
   display: flex;
   flex-direction: column;
-  height: 5vh;
-  max-height: 10vh;
-  border-bottom: 3px solid transparent;
-
-  &:hover {
-    height: 10vh;
-    border-bottom: 3px solid ${props => props.theme.primaryColour};
-  }
+  justify-content: center;
+  font-size: 16px;
+  color: ${props => props.theme.primaryColour};
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
 `;
 
 const FormButton = styled.div`
@@ -61,22 +59,15 @@ const FormButton = styled.div`
 `;
 
 const Logout = styled(FormButton)`
-  display: none;
   color: black;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 3px solid transparent;
   height: 5vh;
+  display: flex;
   flex-direction: column;
+  padding: 0 10px;
   justify-content: center;
   cursor: pointer;
-
-  ${SelfArea}:hover & {
-    display: flex;
-  }
-
-  &:hover {
-    border-bottom: 3px solid ${props => props.theme.primaryColour};
-  }
 `;
 
 const Nav = ({ onLogout }) => {
@@ -91,13 +82,9 @@ const Nav = ({ onLogout }) => {
 
         <NavSection>
           <Consumer>
-            {context => (
-              <SelfArea>
-                <StyledLink to="/self">{context.email}</StyledLink>
-                <Logout onClick={onLogout}>Sign Out</Logout>
-              </SelfArea>
-            )}
+            {context => <ProfileLink to="/self">{context.email}</ProfileLink>}
           </Consumer>
+          <Logout onClick={onLogout}>Sign Out</Logout>
         </NavSection>
       </StyledNavContainer>
     </StyledNav>

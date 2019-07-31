@@ -65,12 +65,15 @@ class AccountTransactionForm extends Component {
         console.log(res.data.data);
 
         this.props.onTransactionCreation(res.data.data[0]);
-
+        const { amount, created_at, transaction_id, type } = res.data.data[0];
         //TODO: Handle Different Bad Input Error cases here.
+        //TODO: IF ERROR DO NOT CALL THE ABOVE CB, IT CREATES AN EMPTY DIV
         this.setState({
           amount: 0.0,
           isModalVisible: true,
-          modalText: `Your transaction was completed.`
+          modalText: `Your '${type}' of ${amount} dollars was completed on ${
+            created_at.split("T")[0]
+          }.  Your confirmation number is as follows: ${transaction_id}.`
         });
       })
       .catch(e => {

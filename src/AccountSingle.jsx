@@ -36,11 +36,11 @@ class AccountSingle extends Component {
       .finally(() => {});
   }
 
-  handleTransactionCreation = latestTranasction => {
+  handleTransactionCreation = latestTransaction => {
     this.setState(ps => {
       return {
         ...ps,
-        data: ps.data.concat(latestTranasction)
+        data: ps.data.concat(latestTransaction)
       };
     });
   };
