@@ -2,13 +2,13 @@
 
 React and Node Boilerplate in FAAS for use on Zeit Now.
 
-# UPDATES
+## UPDATES
 
+> MR5/20: Added Updated Favicon.
 > MR5/20: Updated Styling for Login Page.
-> MR5/20: npm security updates.
+> MR5/20: Added npm security updates.
 
-
-TODO:
+## TODO:
 
 > JL18/19: Add paging to transactions.
 > JL18/19: Add Account Deletion.

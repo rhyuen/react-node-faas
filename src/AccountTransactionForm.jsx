@@ -73,7 +73,7 @@ class AccountTransactionForm extends Component {
           isModalVisible: true,
           modalText: `Your '${type}' of ${amount} dollars was completed on ${
             created_at.split("T")[0]
-          }.  Your confirmation number is as follows: ${transaction_id}.`
+            }.  Your confirmation number is as follows: ${transaction_id}.`
         });
       })
       .catch(e => {
@@ -84,7 +84,7 @@ class AccountTransactionForm extends Component {
           modalText: `Something has gone wrong with your transaction: ${e}`
         });
       })
-      .finally(() => {});
+      .finally(() => { });
   };
 
   handleModalCloseButton = () => {

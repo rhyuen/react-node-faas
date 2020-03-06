@@ -153,7 +153,7 @@ class Signup extends Component {
         ) : null}
 
         <div>
-          <PrimaryColourHeader>Signup</PrimaryColourHeader>
+          <PrimaryColourHeader>Signup for OLIA Bank</PrimaryColourHeader>
           <form onSubmit={this.handleSubmit}>
             <TextInput
               type="text"

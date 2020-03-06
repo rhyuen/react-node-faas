@@ -23,7 +23,7 @@ const TransactionsHeader = props => {
   return (
     <TxContainer>
       <Cell title="YYYY/MM/DD">Date</Cell>
-      <Cell>Type</Cell>
+      <Cell title="Deposit/Withdrawl/Transfer">Type</Cell>
       <Cell>Sender</Cell>
       <Cell>Receiver</Cell>
       <TotalCell>Amount</TotalCell>

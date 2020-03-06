@@ -19,12 +19,9 @@ class AdColumn extends Component {
     return (
       <Root>
         <Cardless>
-          <Header>Recent Changes</Header>
+          <Header>About OLIA Bank</Header>
           <section>
-            It provides a web-based user interface to monitor and control smart
-            home devices, a rules engine to automate them and an add-ons system
-            to extend the gateway with support for a wide range of existing
-            smart home devices.
+            Just a banking application that I made up.   'OLIA Bank' stands for "Oh look, it's another" bank.
           </section>
         </Cardless>
         <AdRelatedLinks />

@@ -24,18 +24,18 @@ const StyledNavContainer = styled.div`
 const NavSection = styled.div`
   display: flex;
 `;
-const StyledLink = styled(Link)`
+const NavLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: ${props => props.theme.primaryColour};
+  font-weight: bold;
+  text-transform: uppercase;
   margin-right: 1vw;
   height: 5vh;
   display: flex;
   flex-direction: column;
   justify-content: center;  
   border-bottom: 3px solid transparent;
-  &:visited{
-    color: black;
-  }
+  
   &:hover {
     border-bottom: 3px solid ${props => props.theme.primaryColour};  
 `;
@@ -59,15 +59,20 @@ const FormButton = styled.div`
 `;
 
 const Logout = styled(FormButton)`
-  color: black;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 3px solid transparent;
+  color: palevioletred;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px solid ${props => props.theme.borderColour};  
   height: 5vh;
   display: flex;
-  flex-direction: column;
-  padding: 0 10px;
+  flex-direction: column;  
+  padding: 0 10px;  
   justify-content: center;
   cursor: pointer;
+  
+  &:hover{
+    border-bottom: 2px solid palevioletred;
+  }
 `;
 
 const Nav = ({ onLogout }) => {
@@ -75,9 +80,9 @@ const Nav = ({ onLogout }) => {
     <StyledNav>
       <StyledNavContainer>
         <NavSection>
-          <StyledLink to="/">Home</StyledLink>
-          <StyledLink to="/me">Me</StyledLink>
-          <StyledLink to="/account">Accounts</StyledLink>
+          <NavLink to="/">OLIA</NavLink>
+          <NavLink to="/me">Me</NavLink>
+          <NavLink to="/account">Accounts</NavLink>
         </NavSection>
 
         <NavSection>

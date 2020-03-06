@@ -30,6 +30,7 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             template: path.join(__dirname, "src/templates/index.html"),
+            favicon: path.join(__dirname, "src/images/favicon_oliabank.png"),
             filename: "index.html",
             inject: "body",
             title: "OLIA BANK"
