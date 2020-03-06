@@ -4,8 +4,7 @@ import FormButton from "./FormButton.jsx";
 import Card from "./Card.jsx";
 import validator from "validator";
 import TextInput from "./FormTextInput.jsx";
-import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
+import PrimaryColourHeader from "./shared/PrimaryColourHeader.jsx";
 import StyledLink from "./StyledLink.jsx";
 import Modal from "./Modal.jsx";
 
@@ -54,12 +53,12 @@ class Forgot extends Component {
       <Card>
         {this.state.isEmailConfirmationVisible ? (
           <Modal handleCloseButton={this.handleModalClose}>
-            An email with directions on what to do will arrive shortly.
-            <Link to="/">Go back to login</Link>
+            An email with directions on what to do will arrive shortly.  Go back to &nbsp;
+            <StyledLink to="/">login</StyledLink>
           </Modal>
         ) : null}
 
-        <h1>Account Recovery</h1>
+        <PrimaryColourHeader>Account Recovery</PrimaryColourHeader>
         <form onSubmit={this.handleSubmit}>
           <TextInput
             type="text"

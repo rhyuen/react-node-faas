@@ -4,8 +4,9 @@ import styled from "styled-components";
 const StyledButton = styled.input`
   background: ${props => props.theme.primaryColour};
   border: 2px solid ${props => props.theme.primaryColour};
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 5px 10px;
   font-weight: bold;
   text-transform: uppercase;
   color: white;
@@ -20,7 +21,7 @@ const StyledButton = styled.input`
   &:disabled {
     background: white;
     color: lightgrey;
-    border-color: black;
+    border-color: ${props => props.theme.borderColour};
   }
 `;
 

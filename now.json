@@ -1,8 +1,7 @@
 {
     "version": 2,
-    "name": "nodefaas",
     "alias": [
-        "rynodefaas"
+        "oliabank"
     ],
     "env": {
         "pg_user_faas": "@pg_user_faas",
@@ -11,41 +10,56 @@
         "pg_password_faas": "@pg_password_faas",
         "cookie_secret": "@faas_cookie_sign"
     },
-    "builds": [{
-        "src": "backend/*.js",
-        "use": "@now/node"
-    }, {
-        "src": "package.json",
-        "use": "@now/static-build",
-        "config": {
-            "distDir": "dist"
+    "builds": [
+        {
+            "src": "backend/*.js",
+            "use": "@now/node"
+        },
+        {
+            "src": "package.json",
+            "use": "@now/static-build",
+            "config": {
+                "distDir": "dist"
+            }
         }
-    }],
-    "routes": [{
+    ],
+    "routes": [
+        {
             "src": "/api/signup",
             "dest": "/backend/signup.js",
-            "methods": ["POST"]
+            "methods": [
+                "POST"
+            ]
         },
         {
             "src": "/api/createTransaction",
             "dest": "/backend/createTransaction.js",
-            "methods": ["POST"]
+            "methods": [
+                "POST"
+            ]
         },
         {
             "src": "/api/login",
             "dest": "/backend/login.js",
-            "methods": ["POST"]
+            "methods": [
+                "POST"
+            ]
         },
         {
             "src": "/api/createAccount",
             "dest": "/backend/createAccount.js",
-            "methods": ["POST"]
+            "methods": [
+                "POST"
+            ]
         },
         {
             "src": "/api/(.*)",
             "dest": "/backend/$1.js",
-            "methods": ["GET"]
-        }, {
+            "methods": [
+                "GET"
+            ]
+        },
+        {
             "src": "/me",
             "dest": "/index.html"
         },

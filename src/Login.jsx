@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import InfoText from "./InfoText.jsx";
 import Card from "./Card.jsx";
 import axios from "axios";
 import StyledLink from "./StyledLink.jsx";
+import PrimaryColourHeader from "./shared/PrimaryColourHeader.jsx";
 import Form from "./Form.jsx";
 import validator from "validator";
 
@@ -108,7 +108,7 @@ class Login extends Component {
   render() {
     return (
       <Card>
-        <h1>Login</h1>
+        <PrimaryColourHeader>Login</PrimaryColourHeader>
         <Form
           onInputChange={this.handleInputChange}
           emailValue={this.state.email}

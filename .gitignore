@@ -6,3 +6,4 @@ keys.json
 now-secrets.json
 /**/.env
 setupdb/keys.js
+.now

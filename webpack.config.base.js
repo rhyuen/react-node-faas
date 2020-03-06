@@ -1,6 +1,5 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -33,18 +32,7 @@ module.exports = {
             template: path.join(__dirname, "src/templates/index.html"),
             filename: "index.html",
             inject: "body",
-            title: "Front End Boilerplate Project"
-        }),
-        new CopyWebpackPlugin([{
-            from: "./src/images/*.ico",
-            flatten: true,
-            test: /\.(ico)$/,
-            ignore: ["*.jsx"],
-            toType: "file"
-
-        }], {
-            debug: "debug",
-            copyUnmodified: true
+            title: "OLIA BANK"
         })
     ]
 };

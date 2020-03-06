@@ -4,6 +4,7 @@ import FormButton from "./FormButton.jsx";
 import TextInput from "./FormTextInput.jsx";
 import InfoText from "./InfoText.jsx";
 import Modal from "./Modal.jsx";
+import PrimaryColourHeader from "./shared/PrimaryColourHeader.jsx";
 import { Link } from "react-router-dom";
 import StyledLink from "./StyledLink.jsx";
 import axios from "axios";
@@ -152,7 +153,7 @@ class Signup extends Component {
         ) : null}
 
         <div>
-          <h1>Signup</h1>
+          <PrimaryColourHeader>Signup</PrimaryColourHeader>
           <form onSubmit={this.handleSubmit}>
             <TextInput
               type="text"

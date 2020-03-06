@@ -7,10 +7,9 @@ const Card = styled.section`
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 2px;
   width: 320px;
-  min-height: 400px;
-  box-shadow: 2px 5px rgba(0, 0, 0, 0.2);
+  min-height: 400px;  
 `;
 
 const ExportedCard = props => {
